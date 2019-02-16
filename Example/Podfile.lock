@@ -1,0 +1,39 @@
+PODS:
+  - Alamofire (4.8.1)
+  - GRMustache.swift4 (3.0.0)
+  - PromiseKit (6.8.3):
+    - PromiseKit/CorePromise (= 6.8.3)
+    - PromiseKit/Foundation (= 6.8.3)
+    - PromiseKit/UIKit (= 6.8.3)
+  - PromiseKit/CorePromise (6.8.3)
+  - PromiseKit/Foundation (6.8.3):
+    - PromiseKit/CorePromise
+  - PromiseKit/UIKit (6.8.3):
+    - PromiseKit/CorePromise
+  - RestingKit (0.0.1):
+    - Alamofire (~> 4.8)
+    - GRMustache.swift4 (~> 3.0)
+    - PromiseKit (~> 6.8)
+
+DEPENDENCIES:
+  - RestingKit (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - GRMustache.swift4
+    - PromiseKit
+
+EXTERNAL SOURCES:
+  RestingKit:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  GRMustache.swift4: 86ae782779f723ed8dd1625a63df193b2eed3bce
+  PromiseKit: 94c6e781838c5bf4717677d0d882b0e7250c80fc
+  RestingKit: d29a6a6b12e8d843475eb06e32f7c5674dbb569e
+
+PODFILE CHECKSUM: bead2acbef52a98096728483524e9db404e8204d
+
+COCOAPODS: 1.6.0
