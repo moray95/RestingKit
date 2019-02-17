@@ -29,7 +29,7 @@ RestingKit is available through [CocoaPods](https://cocoapods.org). To install i
 pod 'RestingKit'
 ```
 
-## Usage
+## Usage
 
 ### Basic example
 
@@ -171,8 +171,8 @@ class DeviceIdInjector: RestingInterceptor {
 }
 
 let restingClient = RestingClient(baseUrl: "https://jsonplaceholder.typicode.com",
-                                   decoder: decoder,
-                                   requestConverter: requestConverter,
+                                  decoder: decoder,
+                                  requestConverter: requestConverter,
                                   interceptors: [DeviceIdInjector(), LogInterceptor()])
 ```
 
