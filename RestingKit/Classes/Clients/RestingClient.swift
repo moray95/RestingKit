@@ -29,75 +29,94 @@ open class RestingClient {
 
     open func perform<RequestType: Encodable, ResponseType: Decodable>
         (_ request: RestingRequest<RequestType, ResponseType>) -> Promise<HTTPResponse<ResponseType>> {
-        return performRequest(request).map { response in
-            let data = response.data
-            let object = try self.decoder.decode(ResponseType.self, from: data)
-            //swiftlint:disable:next force_cast
-            let headers = response.urlResponse.allHeaderFields as! [String: String]
-            return HTTPResponse(body: object, headers: headers)
+        return performRequest(request, upload: false).promise.map { response in
+            try HTTPResponse<ResponseType>.from(response: response, decoder: self.decoder)
         }
     }
 
     open func perform<RequestType: Encodable, ResponseType: Decodable>
         (_ request: RestingRequest<RequestType, ResponseType?>) -> Promise<HTTPResponse<ResponseType?>> {
-        return performRequest(request).map { response in
-            //swiftlint:disable:next force_cast
-            let headers = response.urlResponse.allHeaderFields as! [String: String]
-            let data = response.data
-            guard !data.isEmpty else {
-                return HTTPResponse(body: nil, headers: headers)
-            }
-            let object = try self.decoder.decode(ResponseType.self, from: data)
-            return HTTPResponse(body: object, headers: headers)
-        }
+        return performRequest(request, upload: false).map { response in
+            try HTTPResponse<ResponseType>.nullable(response: response, decoder: self.decoder)
+        }.promise
     }
 
     open func perform<RequestType: Encodable>(_ request: RestingRequest<RequestType, Nothing>)
         -> Promise<HTTPResponse<Void>> {
-        return performRequest(request).map { response in
-            //swiftlint:disable:next force_cast
-            let headers = response.urlResponse.allHeaderFields as! [String: String]
-            return HTTPResponse(body: (), headers: headers)
+            return performRequest(request, upload: false).map(HTTPResponse<Void>.empty).promise
+    }
+
+    open func upload<RequestType: Encodable, ResponseType: Decodable>
+        (_ request: RestingRequest<RequestType, ResponseType>) -> ProgressablePromise<HTTPResponse<ResponseType>> {
+        return performRequest(request, upload: true).map { response in
+            try HTTPResponse<ResponseType>.from(response: response, decoder: self.decoder)
         }
     }
 
+    open func upload<RequestType: Encodable, ResponseType: Decodable>
+        (_ request: RestingRequest<RequestType, ResponseType?>) -> ProgressablePromise<HTTPResponse<ResponseType?>> {
+        return performRequest(request, upload: true).map { response in
+            try HTTPResponse<ResponseType>.nullable(response: response, decoder: self.decoder)
+        }
+    }
+
+    open func upload<RequestType: Encodable>(_ request: RestingRequest<RequestType, Nothing>)
+        -> ProgressablePromise<HTTPResponse<Void>> {
+            return performRequest(request, upload: true).map(HTTPResponse<Void>.empty)
+    }
+
     private func performRequest<RequestType: Encodable, ResponseType: Decodable>
-        (_ request: RestingRequest<RequestType, ResponseType>) -> Promise<HTTPDataResponse> {
-        return convertRequest(request).then {
-            return self.runInterceptors($0, interceptors: self.interceptors) { urlRequest in
-                return self.httpClient.perform(urlRequest: urlRequest)
-            }.get { dataResponse in
-                    let urlResponse = dataResponse.urlResponse
-                    guard (200..<300).contains(urlResponse.statusCode) else {
-                        //swiftlint:disable:next force_cast
-                        let headers = urlResponse.allHeaderFields as! [String: String]
-                        throw HTTPError(status: urlResponse.statusCode, headers: headers, data: dataResponse.data)
-                    }
+        (_ request: RestingRequest<RequestType, ResponseType>, upload: Bool) -> ProgressablePromise<HTTPDataResponse> {
+        return convertRequest(request, forUpload: upload).then { request in
+            self.runInterceptors(request, interceptors: self.interceptors) { request in
+                self.uplaodOrPerform(request: request, upload: upload).ensure {
+                    self.deleteFile(request: request)
+                }
             }
+        }.get { dataResponse in
+                let urlResponse = dataResponse.urlResponse
+                guard (200..<300).contains(urlResponse.statusCode) else {
+                    //swiftlint:disable:next force_cast
+                    let headers = urlResponse.allHeaderFields as! [String: String]
+                    throw HTTPError(status: urlResponse.statusCode, headers: headers, data: dataResponse.data)
+                }
+        }
+    }
+
+    private func uplaodOrPerform(request: HTTPRequest, upload: Bool) -> ProgressablePromise<HTTPDataResponse> {
+        if upload {
+            return httpClient.upload(request: request)
+        } else {
+            return httpClient.perform(request: request).asProgressable()
         }
     }
 
     private func convertRequest<RequestType: Encodable, ResponseType: Decodable>
-        (_ request: RestingRequest<RequestType, ResponseType>) -> Promise<URLRequest> {
-        return Promise {
-            do {
-                $0.fulfill(try requestConverter.toUrlRequest(request, baseUrl: baseUrl).asURLRequest())
-            } catch {
-                $0.reject(error)
-            }
+        (_ request: RestingRequest<RequestType, ResponseType>, forUpload: Bool) -> ProgressablePromise<HTTPRequest> {
+        return ProgressablePromise { (resolver: Resolver<HTTPRequest>, _: ProgressHandler) throws -> Void in
+            let request = try requestConverter.toHTTPRequest(request,
+                                                             baseUrl: baseUrl,
+                                                             forUpload: forUpload)
+            resolver.fulfill(request)
         }
     }
 
-    private func runInterceptors(_ request: URLRequest, interceptors: [RestingInterceptor],
-                                 resolver: @escaping (URLRequest) -> Promise<HTTPDataResponse>)
-        -> Promise<HTTPDataResponse> {
-        guard !interceptors.isEmpty else {
-            return resolver(request)
-        }
-        var interceptors = interceptors
-        let nextInterceptor = interceptors.removeFirst()
-        return nextInterceptor.intercept(request: request) {
-            runInterceptors($0, interceptors: interceptors, resolver: resolver)
+    private func runInterceptors(_ request: HTTPRequest, interceptors: [RestingInterceptor],
+                                 resolver: @escaping (HTTPRequest) -> ProgressablePromise<HTTPDataResponse>)
+        -> ProgressablePromise<HTTPDataResponse> {
+            guard !interceptors.isEmpty else {
+                return resolver(request)
+            }
+            var interceptors = interceptors
+            let nextInterceptor = interceptors.removeFirst()
+            return nextInterceptor.intercept(request: request) {
+                runInterceptors($0, interceptors: interceptors, resolver: resolver)
+            }
+    }
+
+    private func deleteFile(request: HTTPRequest) {
+        if let fileUrl = request.fileUrl {
+            try? FileManager.default.removeItem(at: fileUrl)
         }
     }
 }

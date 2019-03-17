@@ -9,6 +9,6 @@ import Foundation
 import PromiseKit
 
 public protocol RestingInterceptor {
-    func intercept(request: URLRequest, execution: (URLRequest) -> Promise<HTTPDataResponse>)
-        -> Promise<HTTPDataResponse>
+    typealias Execution = (HTTPRequest) -> ProgressablePromise<HTTPDataResponse>
+    func intercept(request: HTTPRequest, execution: Execution) -> ProgressablePromise<HTTPDataResponse>
 }

@@ -11,9 +11,10 @@ import Foundation
 public enum RequestEncoding {
     case json
     case query
+    case multipartFormData
 }
 
-public struct Endpoint<RequestType: Encodable, ResponseType: Decodable> {
+public struct Endpoint<RequestType, ResponseType> {
     public let path: String
     public let method: HTTPMethod
     public let encoding: RequestEncoding

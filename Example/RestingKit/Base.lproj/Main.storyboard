@@ -9,6 +9,102 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--View Controller-->
+        <scene sceneID="d1g-rW-gUs">
+            <objects>
+                <viewController id="FFq-KU-kvF" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bVe-Su-oPY"/>
+                        <viewControllerLayoutGuide type="bottom" id="4w8-Cn-XJ8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="VXK-tc-yJ8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="m0O-y9-NkI">
+                                <rect key="frame" x="111.5" y="283.5" width="152" height="100"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZtV-4F-vaj">
+                                        <rect key="frame" x="0.0" y="0.0" width="152" height="30"/>
+                                        <state key="normal" title="Classic REST Exemple"/>
+                                        <connections>
+                                            <segue destination="vXZ-lx-hvc" kind="show" id="Jlq-bp-V6t"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="04i-9m-Gt8">
+                                        <rect key="frame" x="0.0" y="70" width="152" height="30"/>
+                                        <state key="normal" title="File upload"/>
+                                        <connections>
+                                            <segue destination="cGh-SL-taQ" kind="show" id="3JA-8R-65s"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="m0O-y9-NkI" firstAttribute="centerX" secondItem="VXK-tc-yJ8" secondAttribute="centerX" id="Q5J-TY-dnf"/>
+                            <constraint firstItem="m0O-y9-NkI" firstAttribute="centerY" secondItem="VXK-tc-yJ8" secondAttribute="centerY" id="cVt-dK-azf"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="vbj-ih-uHD"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JJQ-77-sbN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1340" y="134"/>
+        </scene>
+        <!--Image Upload View Controller-->
+        <scene sceneID="Ias-t5-QFX">
+            <objects>
+                <viewController id="cGh-SL-taQ" customClass="ImageUploadViewController" customModule="RestingKit_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cnk-Q5-wE4"/>
+                        <viewControllerLayoutGuide type="bottom" id="Dvg-hQ-eXX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xqk-eo-FBi">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="gEZ-FW-Gdx">
+                                <rect key="frame" x="128" y="253.5" width="119" height="160.5"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iqc-fj-yU2">
+                                        <rect key="frame" x="0.0" y="0.0" width="119" height="30"/>
+                                        <state key="normal" title="Select image"/>
+                                        <connections>
+                                            <action selector="selectImage" destination="cGh-SL-taQ" eventType="touchUpInside" id="WMk-0A-bnQ"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No file selected" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MKt-wn-znN">
+                                        <rect key="frame" x="0.0" y="70" width="119" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CXM-0B-3Lm">
+                                        <rect key="frame" x="0.0" y="130.5" width="119" height="30"/>
+                                        <state key="normal" title="Upload"/>
+                                        <connections>
+                                            <action selector="uploadImage" destination="cGh-SL-taQ" eventType="touchUpInside" id="TQM-sm-Gqz"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="gEZ-FW-Gdx" firstAttribute="centerX" secondItem="xqk-eo-FBi" secondAttribute="centerX" id="A7h-SB-VBa"/>
+                            <constraint firstItem="gEZ-FW-Gdx" firstAttribute="centerY" secondItem="xqk-eo-FBi" secondAttribute="centerY" id="Qcr-07-Ded"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="statusLabel" destination="MKt-wn-znN" id="TRp-PL-dIZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cWJ-Dp-KlA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1340" y="922"/>
+        </scene>
         <!--Posts-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
@@ -71,7 +167,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1079.2" y="133.5832083958021"/>
+            <point key="canvasLocation" x="2527" y="134"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="H8Z-qb-6Wv">
@@ -84,7 +180,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="E5R-xe-1ir"/>
+                        <segue destination="FFq-KU-kvF" kind="relationship" relationship="rootViewController" id="iWX-Qd-2og"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Ml-yB-lyx" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -135,7 +231,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bww-Wk-CXC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1871" y="134"/>
+            <point key="canvasLocation" x="3319" y="134"/>
         </scene>
         <!--New post-->
         <scene sceneID="4KU-eT-YPd">
@@ -190,7 +286,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4g5-ju-tqh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1079" y="922"/>
+            <point key="canvasLocation" x="2527" y="922"/>
         </scene>
     </scenes>
 </document>

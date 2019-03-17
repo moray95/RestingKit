@@ -3,7 +3,7 @@
 //  RestingKit
 //
 //  Created by Moray on 2/17/19.
-//  Copyright © 2019 CocoaPods. All rights reserved.
+//  Copyright © 2019 RestingKit. All rights reserved.
 //
 
 import Foundation

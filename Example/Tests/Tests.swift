@@ -14,8 +14,14 @@ class Tests: XCTestCase {
     }
     
     func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
+        let client = RestingClient(baseUrl: "http://example.com", decoder: JSONDecoder(), httpClient: EmptyHTTPClient(), requestConverter: RestingRequestConverter(jsonEncoder: JSONEncoder(), jsonDecoder: JSONDecoder()))
+        let endpoint = Endpoint<Nothing, Nothing>(path: "/", method: .get, encoding: .json)
+        let request = RestingRequest(endpoint: endpoint, body: Nothing())
+        client.perform(request).done { _ in
+
+        }.catch { error in
+            XCTFail("Expected call to succeed but failed with error \(error)")
+        }
     }
     
     func testPerformanceExample() {

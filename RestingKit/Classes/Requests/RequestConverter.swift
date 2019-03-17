@@ -9,6 +9,8 @@ import Alamofire
 import Foundation
 
 public protocol RequestConverter {
-    func toUrlRequest<RequestType: Encodable, ResponseType: Decodable>
-        (_ request: RestingRequest<RequestType, ResponseType>, baseUrl: String) -> URLRequestConvertible
+    func toHTTPRequest<RequestType: Encodable, ResponseType: Decodable>(
+        _ request: RestingRequest<RequestType, ResponseType>,
+        baseUrl: String,
+        forUpload: Bool) throws -> HTTPRequest
 }

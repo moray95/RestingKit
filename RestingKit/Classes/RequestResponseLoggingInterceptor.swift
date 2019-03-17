@@ -11,25 +11,24 @@ import PromiseKit
 open class RequestResponseLoggingInterceptor: RestingInterceptor {
     public init() { }
 
-    open func intercept(request: URLRequest, execution: (URLRequest) -> Promise<HTTPDataResponse>)
-        -> Promise<HTTPDataResponse> {
+    open func intercept(request: HTTPRequest, execution: Execution) -> ProgressablePromise<HTTPDataResponse> {
         log(request: request)
         let promise = execution(request).get { response in
             self.log(response: response, to: request)
         }
-        promise.catch { error in
+        promise.promise.catch { error in
             self.log(error: error, to: request)
         }
         return promise
     }
 
-    open func log(request: URLRequest) {
+    open func log(request: HTTPRequest) {
         print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-        print("\(request.httpMethod!) \(request.url!)")
-        request.allHTTPHeaderFields?.forEach {
+        print("\(request.urlRequest.httpMethod!) \(request.urlRequest.url!)")
+        request.urlRequest.allHTTPHeaderFields?.forEach {
             print("\($0): \($1)")
         }
-        if let body = request.httpBody {
+        if let body = request.urlRequest.httpBody {
             if let bodyAsString = String(data: body, encoding: .utf8) {
                 print(bodyAsString)
             } else {
@@ -40,9 +39,9 @@ open class RequestResponseLoggingInterceptor: RestingInterceptor {
         print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
     }
 
-    open func log(response: HTTPDataResponse, to request: URLRequest) {
+    open func log(response: HTTPDataResponse, to request: HTTPRequest) {
         print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
-        print("\(request.httpMethod!) \(request.url!)")
+        print("\(request.urlRequest.httpMethod!) \(request.urlRequest.url!)")
         print("\(response.urlResponse.statusCode)")
         response.urlResponse.allHeaderFields.forEach {
             print("\($0): \($1)")
@@ -55,9 +54,9 @@ open class RequestResponseLoggingInterceptor: RestingInterceptor {
         print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
     }
 
-    open func log(error: Error, to request: URLRequest) {
+    open func log(error: Error, to request: HTTPRequest) {
         print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
-        print("\(request.httpMethod!) \(request.url!) failed with error:")
+        print("\(request.urlRequest.httpMethod!) \(request.urlRequest.url!) failed with error:")
         print(error)
         print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
     }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-open class RestingRequest<RequestType: Encodable, ResponseType: Decodable> {
+open class RestingRequest<RequestType, ResponseType> {
     public let endpoint: Endpoint<RequestType, ResponseType>
     public let body: RequestType
     public let headers: [String: String]

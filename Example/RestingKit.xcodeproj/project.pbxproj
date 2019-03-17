@@ -15,6 +15,7 @@
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		830BB0A8C83DF3F5197AE35B /* Pods_RestingKit_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16AFE406DB7D3E5C150A40D2 /* Pods_RestingKit_Example.framework */; };
 		ABF0AF94B40476308DDE948B /* Pods_RestingKit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CF3475537199B5CB77162A8 /* Pods_RestingKit_Tests.framework */; };
+		CE47D029221DDF42008FEAAA /* EmptyHttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED1956C221B345A00D08CA8 /* EmptyHttpClient.swift */; };
 		CE5A7CDB2219AECC00291583 /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5A7CDA2219AECC00291583 /* Endpoints.swift */; };
 		CE5A7CDD2219AF5F00291583 /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5A7CDC2219AF5F00291583 /* PostModel.swift */; };
 		CE5A7CDF2219B02A00291583 /* PostCreateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5A7CDE2219B02A00291583 /* PostCreateModel.swift */; };
@@ -23,6 +24,9 @@
 		CE5A7CE52219B3E200291583 /* Promise+RestingKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5A7CE42219B3E200291583 /* Promise+RestingKit.swift */; };
 		CE5A7CE72219B52B00291583 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5A7CE62219B52B00291583 /* PostDetailViewController.swift */; };
 		CE5A7CE92219B70300291583 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5A7CE82219B70300291583 /* CreatePostViewController.swift */; };
+		CE8C1C03222195DD00B98733 /* ImageServerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8C1C02222195DD00B98733 /* ImageServerClient.swift */; };
+		CE8C1C052221981300B98733 /* ImageUploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8C1C042221981300B98733 /* ImageUploadViewController.swift */; };
+		CE8C1C0722219A6400B98733 /* ImageUploadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8C1C0622219A6400B98733 /* ImageUploadModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +66,10 @@
 		CE5A7CE42219B3E200291583 /* Promise+RestingKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Promise+RestingKit.swift"; sourceTree = "<group>"; };
 		CE5A7CE62219B52B00291583 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		CE5A7CE82219B70300291583 /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
+		CE8C1C02222195DD00B98733 /* ImageServerClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageServerClient.swift; sourceTree = "<group>"; };
+		CE8C1C042221981300B98733 /* ImageUploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploadViewController.swift; sourceTree = "<group>"; };
+		CE8C1C0622219A6400B98733 /* ImageUploadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploadModel.swift; sourceTree = "<group>"; };
+		CED1956C221B345A00D08CA8 /* EmptyHttpClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyHttpClient.swift; sourceTree = "<group>"; };
 		E913C917437E30CD2EF32CBA /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -124,10 +132,13 @@
 				CE5A7CDA2219AECC00291583 /* Endpoints.swift */,
 				CE5A7CDC2219AF5F00291583 /* PostModel.swift */,
 				CE5A7CDE2219B02A00291583 /* PostCreateModel.swift */,
+				CE8C1C0622219A6400B98733 /* ImageUploadModel.swift */,
 				CE5A7CE02219B23E00291583 /* JSONPlaceholderClient.swift */,
+				CE8C1C02222195DD00B98733 /* ImageServerClient.swift */,
 				CE5A7CE22219B2DE00291583 /* UIViewController+Error.swift */,
 				CE5A7CE42219B3E200291583 /* Promise+RestingKit.swift */,
 				CE5A7CE82219B70300291583 /* CreatePostViewController.swift */,
+				CE8C1C042221981300B98733 /* ImageUploadViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -149,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
+				CED1956C221B345A00D08CA8 /* EmptyHttpClient.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -236,7 +248,9 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = ED92EFPH85;
 						LastSwiftMigration = 0900;
+						ProvisioningStyle = Automatic;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -373,6 +387,9 @@
 				CE5A7CDD2219AF5F00291583 /* PostModel.swift in Sources */,
 				CE5A7CDB2219AECC00291583 /* Endpoints.swift in Sources */,
 				CE5A7CE52219B3E200291583 /* Promise+RestingKit.swift in Sources */,
+				CE8C1C052221981300B98733 /* ImageUploadViewController.swift in Sources */,
+				CE8C1C0722219A6400B98733 /* ImageUploadModel.swift in Sources */,
+				CE8C1C03222195DD00B98733 /* ImageServerClient.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -381,6 +398,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE47D029221DDF42008FEAAA /* EmptyHttpClient.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -523,12 +541,16 @@
 			baseConfigurationReference = 92B648656FC0439C26FA007B /* Pods-RestingKit_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ED92EFPH85;
 				INFOPLIST_FILE = RestingKit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
@@ -539,12 +561,16 @@
 			baseConfigurationReference = 9B3B05026FA9426BFBDF64B1 /* Pods-RestingKit_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ED92EFPH85;
 				INFOPLIST_FILE = RestingKit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
