@@ -15,7 +15,7 @@ enum JSONPlaceholderClient {
         let encoder = JSONEncoder()
         let requestConverter = RestingRequestConverter(jsonEncoder: encoder, jsonDecoder: decoder)
 
-        return RestingClient(baseUrl: "http://jsonplaceholder.typicode.com",
+        return RestingClient(baseUrl: "https://jsonplaceholder.typicode.com",
                              decoder: decoder,
                              httpClient: AlamofireClient(),
                              requestConverter: requestConverter,

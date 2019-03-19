@@ -1,9 +1,0 @@
-use_frameworks!
-platform :ios, '11.4'
-
-target 'RestingKit_Example' do
-  pod 'RestingKit', :path => '../'
-  target 'RestingKit_Tests' do
-    inherit! :search_paths
-  end
-end

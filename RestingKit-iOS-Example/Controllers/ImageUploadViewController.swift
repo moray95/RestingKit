@@ -34,9 +34,9 @@ class ImageUploadViewController: UIViewController {
 }
 
 extension ImageUploadViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true)
-        imageURL = info[UIImagePickerControllerImageURL] as? URL
+        imageURL = info[UIImagePickerController.InfoKey.imageURL] as? URL
         if imageURL != nil {
             statusLabel.text = "Image selected"
         }

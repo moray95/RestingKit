@@ -31,7 +31,7 @@ pod 'RestingKit'
 
 ## Example project
 
-An example project is included in the `Example` directory. To run it, first execute `pod install`, then open `RestingKit.xcworkspace`. If you want to test file uploads with the example app, go into the `image_server` directory and run `php -S localhost:9000 -c .`, which will start a dummy server for your uploads. The uploads will be stored in the `uploads` directory.
+An example project is included within the repositry. To run it, first execute `pod install`, then open `RestingKit.xcworkspace`. If you want to test file uploads with the example app, go into the `image_server` directory and run `php -S 0.0.0.0:9000 -c .`, which will start a dummy server for your uploads. The uploads will be stored in the `uploads` directory.
 
 ## Usage
 
