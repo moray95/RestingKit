@@ -11,14 +11,8 @@ Pod::Spec.new do |s|
 
     s.ios.deployment_target = '10.0'
 
-    s.source_files = 'RestingKit/Classes/**/*'
+    s.source_files = 'RestingKit/*.swift', 'RestingKit/**/*.swift'
 
-    # s.resource_bundles = {
-    #   'RestingKit' => ['RestingKit/Assets/*.png']
-    # }
-
-    # s.public_header_files = 'Pod/Classes/**/*.h'
-    # s.frameworks = 'UIKit', 'MapKit'
     s.dependency 'Alamofire', '~> 4.8'
     s.dependency 'GRMustache.swift4', '~> 3.0'
     s.dependency 'PromiseKit', '~> 6.8'
