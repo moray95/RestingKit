@@ -27,25 +27,41 @@ private class MultipartKey: CodingKey {
     }
 }
 
+/// An object that encodes `Encodable` objects into `MultipartFormData`.
 public class MultipartFormDataEncoder {
+    /// Defines available strategies to use when encoding key names.
     public enum KeyEncodingStrategy {
+        /// Converts keys into snake_case.
         case convertToSnakeCase
+        /// Uses keys as they are defined, without modifying them.
         case useDefaultKeys
+        /// Uses a custom coding strategy defined by the closed provided.
         case custom(([CodingKey]) -> CodingKey)
     }
 
+    /// Defines available strategies when encoding `Date` instances.
     public enum DateEncodingStrategy {
+        /// Encodes by `encode(to:)` on the date instance.
         case deferredToDate
+        /// Encodes an integer with the number of seconds since midnight UTC on January 1, 1970.
         case secondsSince1970
+        /// Encodes an integer with the number of milliseconds since midnight UTC on January 1, 1970.
         case millisecondsSince1970
+        /// Encodes the date with the provided `ISO8601DateFormatter`.
         case iso8601(ISO8601DateFormatter)
+        /// Encodes the date with the provided `DateFormatter`.
         case formatted(DateFormatter)
+        /// Delegates the encoding to the closure provided.
         case custom((Date, Encoder) throws -> Void)
     }
 
+    /// Defines available strategies when encoding `Data` instances.
     public enum DataEncodingStrategy {
+        /// Encode the data as is.
         case raw
+        /// Encodes the data using Base 64.
         case base64
+        /// Delegates the encoding to the closure provided.
         case custom((Data, Encoder) throws -> Void)
     }
 
@@ -57,27 +73,41 @@ public class MultipartFormDataEncoder {
 
     var options: Options
 
+    /// The strategy to use for encoding key names. Defaults to `KeyEncodingStrategy.useDefaultKeys`.
     public var keyEncodingStrategy: KeyEncodingStrategy {
         get { return options.keyEncodingStrategy }
         set { options.keyEncodingStrategy = newValue }
     }
 
+    /// The strategy to use for encoding `Date` instances. Defaults to `DateEncodingStrategy.deferredToDate`.
     public var dateEncodingStrategy: DateEncodingStrategy {
         get { return options.dateEncodingStrategy }
         set { options.dateEncodingStrategy = newValue }
     }
 
+    /// The strategy to use for encoding `Data` instances. Defaults to `DataEncodingStrategy.raw`.
     public var dataEncodingStrategy: DataEncodingStrategy {
         get { return options.dataEncodingStrategy }
         set { options.dataEncodingStrategy = newValue }
     }
 
+    /// Creates a new `MultipartFormDataEncoder`.
     public init() {
         self.options = Options(keyEncodingStrategy: .useDefaultKeys,
                                dateEncodingStrategy: .deferredToDate,
                                dataEncodingStrategy: .raw)
     }
 
+    ///
+    /// Encodes an `Encodable` into a `MultipartFormData`.
+    ///
+    /// - parameter value: The object to encode.
+    ///
+    /// - returns: A `MultipartFormData` that represents `value`.
+    ///
+    /// - throws: `EncodingError.invalidValue(_:,_:)` if the object can't be encoded
+    ///           for some reason.
+    ///
     public func encode<T: Encodable>(_ value: T) throws -> MultipartFormData {
         let encoder = _MultipartFormDataEncoder(options: options, codingPath: [])
         var container = encoder.singleValueContainer()

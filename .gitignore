@@ -37,3 +37,4 @@ Carthage/Build
 Pods/
 
 image_server/uploads/*
+docs

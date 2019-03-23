@@ -9,11 +9,15 @@ import Alamofire
 import Foundation
 import PromiseKit
 
+/// An `HTTPClient` that uses `Alamofire` for sending requests.
 public class AlamofireClient: HTTPClient {
+    /// Errors thrown by `AlamofireClient`
     public enum Error: Swift.Error {
+        /// Thrown when `Alamofire` returns no response and no error.
         case unknown
     }
 
+    /// Creates a new `AlamofireClient`
     public init() { }
 
     public func perform(urlRequest: URLRequest) -> Promise<HTTPDataResponse> {

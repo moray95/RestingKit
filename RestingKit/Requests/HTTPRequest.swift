@@ -8,8 +8,15 @@
 import Alamofire
 import Foundation
 
+/// Represents a lower-level HTTP request.
 public protocol HTTPRequest {
+    /// The underlaying `URLRequest`
     var urlRequest: URLRequest { get }
+    ///
+    /// A URL to a file to be used as a streamed request body.
+    /// If `fileURL` is not `nil`, `urlRequest.httpBody` and
+    /// `urlRequest.httpBodyStream` **must** be `nil`.
+    ///
     var fileUrl: URL? { get }
 }
 

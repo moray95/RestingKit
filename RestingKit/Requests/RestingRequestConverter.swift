@@ -8,6 +8,12 @@
 import Alamofire
 import Foundation
 
+///
+/// A `RequestConverter` that supports:
+///
+/// - Path templating using [GRMustache.swift](https://github.com/groue/GRMustache.swift)
+/// - Streamed requests
+///
 public class RestingRequestConverter: RequestConverter {
     let jsonEncoder: JSONEncoder
     let jsonDecoder: JSONDecoder

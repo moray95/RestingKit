@@ -8,7 +8,9 @@
 import Foundation
 import PromiseKit
 
+/// An interceptor that logs requests and responses, including errors if present.
 open class RequestResponseLoggingInterceptor: RestingInterceptor {
+    /// Creates a new `RequestResponseLoggingInterceptor`.
     public init() { }
 
     open func intercept(request: HTTPRequest, execution: Execution) -> ProgressablePromise<HTTPDataResponse> {
@@ -22,6 +24,11 @@ open class RequestResponseLoggingInterceptor: RestingInterceptor {
         return promise
     }
 
+    ///
+    /// Logs an `HTTPRequest`.
+    ///
+    /// - parameter request: The request to log.
+    ///
     open func log(request: HTTPRequest) {
         print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         print("\(request.urlRequest.httpMethod!) \(request.urlRequest.url!)")
@@ -39,6 +46,12 @@ open class RequestResponseLoggingInterceptor: RestingInterceptor {
         print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
     }
 
+    ///
+    /// Logs the response to a request.
+    ///
+    /// - parameter response: The response to log.
+    /// - parameter request: The request sent for the response.
+    ///
     open func log(response: HTTPDataResponse, to request: HTTPRequest) {
         print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
         print("\(request.urlRequest.httpMethod!) \(request.urlRequest.url!)")
@@ -54,6 +67,12 @@ open class RequestResponseLoggingInterceptor: RestingInterceptor {
         print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
     }
 
+    ///
+    /// Logs an error that occurred while sending a request.
+    ///
+    /// - parameter error: The error to log.
+    /// - parameter request: The request that recieved the error.
+    ///
     open func log(error: Error, to request: HTTPRequest) {
         print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
         print("\(request.urlRequest.httpMethod!) \(request.urlRequest.url!) failed with error:")

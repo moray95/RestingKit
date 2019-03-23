@@ -7,9 +7,13 @@
 
 import Foundation
 
+/// An error thrown when a response status code is not 2xx.
 public class HTTPError: Error {
+    /// The status code of the response.
     public let status: Int
+    /// The raw response body of the response.
     public let data: Data
+    /// The headers of the response.
     public let headers: [String: String]
 
     public init(status: Int, headers: [String: String], data: Data) {
