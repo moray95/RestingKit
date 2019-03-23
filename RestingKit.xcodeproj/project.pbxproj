@@ -31,7 +31,6 @@
 		CEE28704224169CC00EF945A /* MultipartFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE286ED224169CC00EF945A /* MultipartFile.swift */; };
 		CEE28705224169CC00EF945A /* DecodingUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE286EE224169CC00EF945A /* DecodingUtils.swift */; };
 		CEE28706224169CC00EF945A /* MultipartNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE286EF224169CC00EF945A /* MultipartNode.swift */; };
-		CEE28707224169CC00EF945A /* MultipartFormDataEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE286F0224169CC00EF945A /* MultipartFormDataEncodable.swift */; };
 		CEE28708224169CC00EF945A /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE286F1224169CC00EF945A /* String.swift */; };
 		CEE28709224169CC00EF945A /* MultipartFormDataEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE286F2224169CC00EF945A /* MultipartFormDataEncoder.swift */; };
 		CEE2870A224169CC00EF945A /* ProgressablePromise.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE286F3224169CC00EF945A /* ProgressablePromise.swift */; };
@@ -103,7 +102,6 @@
 		CEE286ED224169CC00EF945A /* MultipartFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartFile.swift; sourceTree = "<group>"; };
 		CEE286EE224169CC00EF945A /* DecodingUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodingUtils.swift; sourceTree = "<group>"; };
 		CEE286EF224169CC00EF945A /* MultipartNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartNode.swift; sourceTree = "<group>"; };
-		CEE286F0224169CC00EF945A /* MultipartFormDataEncodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartFormDataEncodable.swift; sourceTree = "<group>"; };
 		CEE286F1224169CC00EF945A /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		CEE286F2224169CC00EF945A /* MultipartFormDataEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartFormDataEncoder.swift; sourceTree = "<group>"; };
 		CEE286F3224169CC00EF945A /* ProgressablePromise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressablePromise.swift; sourceTree = "<group>"; };
@@ -255,7 +253,6 @@
 				CEE286ED224169CC00EF945A /* MultipartFile.swift */,
 				CEE286EE224169CC00EF945A /* DecodingUtils.swift */,
 				CEE286EF224169CC00EF945A /* MultipartNode.swift */,
-				CEE286F0224169CC00EF945A /* MultipartFormDataEncodable.swift */,
 				CEE286F1224169CC00EF945A /* String.swift */,
 				CEE286F2224169CC00EF945A /* MultipartFormDataEncoder.swift */,
 				CEE286F3224169CC00EF945A /* ProgressablePromise.swift */,
@@ -640,7 +637,6 @@
 				CEE286F9224169CC00EF945A /* Endpoint.swift in Sources */,
 				CEE286FC224169CC00EF945A /* AlamofireClient.swift in Sources */,
 				CEE28709224169CC00EF945A /* MultipartFormDataEncoder.swift in Sources */,
-				CEE28707224169CC00EF945A /* MultipartFormDataEncodable.swift in Sources */,
 				CEE28701224169CC00EF945A /* HTTPResponse.swift in Sources */,
 				CEE286FD224169CC00EF945A /* RestingClient.swift in Sources */,
 			);
