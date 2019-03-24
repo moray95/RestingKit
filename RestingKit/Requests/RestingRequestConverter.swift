@@ -16,14 +16,21 @@ import Foundation
 ///
 public class RestingRequestConverter: RequestConverter {
     let jsonEncoder: JSONEncoder
-    let jsonDecoder: JSONDecoder
+    let queryParameterEncoder: QueryParameterEncoder
     let multipartFormDataEncoder: MultipartFormDataEncoder
 
+    ///
+    /// Creates a new `RestingRequestConverter`.
+    ///
+    /// - parameter jsonEncoder: The encoder to use for encoding JSON request bodies.
+    /// - parameter queryParameterEncoder: The encoder to use for encoding query parameters.
+    /// - parameter multipartFormDataEncoder: The encoder to use for encoding mulitpart form data bodies.
+    ///
     public init(jsonEncoder: JSONEncoder = JSONEncoder(),
-                jsonDecoder: JSONDecoder = JSONDecoder(),
+                queryParameterEncoder: QueryParameterEncoder = QueryParameterEncoder(),
                 multipartFormDataEncoder: MultipartFormDataEncoder = MultipartFormDataEncoder()) {
         self.jsonEncoder = jsonEncoder
-        self.jsonDecoder = jsonDecoder
+        self.queryParameterEncoder = queryParameterEncoder
         self.multipartFormDataEncoder = multipartFormDataEncoder
     }
 
@@ -34,7 +41,7 @@ public class RestingRequestConverter: RequestConverter {
         return try RestingHTTPRequestConvertible(request: request,
                                                  baseUrl: baseUrl,
                                                  jsonEncoder: jsonEncoder,
-                                                 jsonDecoder: jsonDecoder,
+                                                 queryParameterEncoder: queryParameterEncoder,
                                                  multipartFormDataEncoder: multipartFormDataEncoder,
                                                  forUpload: forUpload).toHTTPRequest()
     }

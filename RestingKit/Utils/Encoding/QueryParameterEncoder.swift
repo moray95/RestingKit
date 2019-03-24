@@ -1,34 +1,15 @@
 //
-//  MultipartFormDataEncoder.swift
+//  QueryParameterEncoder.swift
 //  RestingKit
 //
-//  Created by Moray on 2/23/19.
+//  Created by Moray on 3/24/19.
 //
 
 import Alamofire
 import Foundation
 
-private class MultipartKey: CodingKey {
-    var stringValue: String
-    var intValue: Int?
-
-    init(stringValue: String, intValue: Int?) {
-        self.stringValue = stringValue
-        self.intValue = intValue
-    }
-
-    required init(stringValue: String) {
-        self.stringValue = stringValue
-    }
-
-    required init(intValue: Int) {
-        self.intValue = intValue
-        self.stringValue = "\(intValue)"
-    }
-}
-
-/// An object that encodes `Encodable` objects into `MultipartFormData`.
-public class MultipartFormDataEncoder {
+/// An object that encodes `Encodable` objects into an array of `URLQueryItem`.
+public class QueryParameterEncoder {
     /// Defines available strategies to use when encoding key names.
     public enum KeyEncodingStrategy {
         /// Converts keys into snake_case.
@@ -57,8 +38,6 @@ public class MultipartFormDataEncoder {
 
     /// Defines available strategies when encoding `Data` instances.
     public enum DataEncodingStrategy {
-        /// Encode the data as is.
-        case raw
         /// Encodes the data using Base 64.
         case base64
         /// Delegates the encoding to the closure provided.
@@ -85,41 +64,41 @@ public class MultipartFormDataEncoder {
         set { options.dateEncodingStrategy = newValue }
     }
 
-    /// The strategy to use for encoding `Data` instances. Defaults to `DataEncodingStrategy.raw`.
+    /// The strategy to use for encoding `Data` instances. Defaults to `DataEncodingStrategy.base64`.
     public var dataEncodingStrategy: DataEncodingStrategy {
         get { return options.dataEncodingStrategy }
         set { options.dataEncodingStrategy = newValue }
     }
 
-    /// Creates a new `MultipartFormDataEncoder`.
+    /// Creates a new `QueryParameterEncoder`.
     public init() {
         self.options = Options(keyEncodingStrategy: .useDefaultKeys,
                                dateEncodingStrategy: .deferredToDate,
-                               dataEncodingStrategy: .raw)
+                               dataEncodingStrategy: .base64)
     }
 
     ///
-    /// Encodes an `Encodable` into a `MultipartFormData`.
+    /// Encodes an `Encodable` into an array of `URLQueryItem`.
     ///
     /// - parameter value: The object to encode.
     ///
-    /// - returns: A `MultipartFormData` that represents `value`.
+    /// - returns: An array of `URLQueryItem` that represents `value`.
     ///
     /// - throws: `EncodingError.invalidValue(_:,_:)` if the object can't be encoded
     ///           for some reason.
     ///
-    public func encode<T: Encodable>(_ value: T) throws -> MultipartFormData {
-        let encoder = _MultipartFormDataEncoder(options: options, codingPath: [])
+    public func encode<T: Encodable>(_ value: T) throws -> [URLQueryItem] {
+        let encoder = _QueryParameterEncoder(options: options, codingPath: [])
         var container = encoder.singleValueContainer()
         try container.encode(value)
-        let formData = MultipartFormData()
+        var queryItems = [URLQueryItem]()
         switch encoder.node {
         case nil:
             fatalError("No value encoded")
         case .some(.object(let object)):
             object.forEach {
                 let (key, value) = $0
-                write(value, into: formData, forPath: [MultipartKey(stringValue: key)])
+                write(value, into: &queryItems, forPath: [RestingCodingKey(stringValue: key)])
             }
         case .some(let node):
             let description = "Expected to find a dictionary as top-level object, found \(node) instead"
@@ -128,30 +107,28 @@ public class MultipartFormDataEncoder {
             throw EncodingError.invalidValue(value, context)
         }
 
-        return formData
+        return queryItems
     }
 
-    private func write(_ node: MultipartNode, into formData: MultipartFormData, forPath path: [CodingKey]) {
+    private func write(_ node: QueryNode, into queryItems: inout [URLQueryItem], forPath path: [CodingKey]) {
         switch node {
-        case .data(let data):
-            formData.append(data, withName: fieldName(for: path))
+        case .string(let value):
+            queryItems.append(URLQueryItem(name: fieldName(for: path), value: value))
         case .array(let array):
             array.enumerated().forEach { index, node in
-                write(node, into: formData, forPath: path + [MultipartKey(intValue: index)])
+                write(node, into: &queryItems, forPath: path + [RestingCodingKey(intValue: index)])
             }
         case .object(let object):
             object.forEach {
                 let (innerKey, node) = $0
-                write(node, into: formData, forPath: path + [MultipartKey(stringValue: innerKey)])
+                write(node, into: &queryItems, forPath: path + [RestingCodingKey(stringValue: innerKey)])
             }
-        case .file(let file):
-            formData.append(file.url, withName: fieldName(for: path))
         case .null:
-            formData.append("null".data(using: .utf8)!, withName: fieldName(for: path))
+            queryItems.append(URLQueryItem(name: fieldName(for: path), value: nil))
         }
     }
 
-    func fieldName(for path: [CodingKey]) -> String {
+    private func fieldName(for path: [CodingKey]) -> String {
         if path.isEmpty {
             fatalError("No path provided")
         }
@@ -181,27 +158,26 @@ public class MultipartFormDataEncoder {
     }
 }
 
-//swiftlint:disable:next type_name
-internal class _MultipartFormDataEncoder: Encoder {
+private class _QueryParameterEncoder: Encoder {
     private(set) var codingPath: [CodingKey]
     private(set) var userInfo: [CodingUserInfoKey: Any] = [:]
 
-    fileprivate var node: MultipartNode?
+    fileprivate var node: QueryNode?
 
-    fileprivate var object: [String: MultipartNode] {
+    fileprivate var object: [String: QueryNode] {
         get { return node?.object ?? [:] }
         set { node?.object = newValue }
     }
 
-    fileprivate var array: [MultipartNode] {
+    fileprivate var array: [QueryNode] {
         get { return node?.array ?? [] }
         set { node?.array = newValue }
     }
 
     private var canEncodeNewValue: Bool { return node == nil }
-    let options: MultipartFormDataEncoder.Options
+    let options: QueryParameterEncoder.Options
 
-    init(options: MultipartFormDataEncoder.Options, codingPath: [CodingKey]) {
+    init(options: QueryParameterEncoder.Options, codingPath: [CodingKey]) {
         self.options = options
         self.codingPath = codingPath
     }
@@ -247,25 +223,25 @@ internal class _MultipartFormDataEncoder: Encoder {
     }
 }
 
-private class _ReferencingEncoder: _MultipartFormDataEncoder {
+private class _ReferencingEncoder: _QueryParameterEncoder {
     private enum Reference {
         case object(String)
         case array(Int)
     }
 
-    private let encoder: _MultipartFormDataEncoder
+    private let encoder: _QueryParameterEncoder
     private let reference: Reference
 
-    init(referencing encoder: _MultipartFormDataEncoder, key: CodingKey) {
+    init(referencing encoder: _QueryParameterEncoder, key: CodingKey) {
         self.encoder = encoder
         reference = .object(key.stringValue)
         super.init(options: encoder.options, codingPath: encoder.codingPath + [key])
     }
 
-    init(referencing encoder: _MultipartFormDataEncoder, at index: Int) {
+    init(referencing encoder: _QueryParameterEncoder, at index: Int) {
         self.encoder = encoder
         reference = .array(index)
-        super.init(options: encoder.options, codingPath: encoder.codingPath + [MultipartKey(intValue: index)])
+        super.init(options: encoder.options, codingPath: encoder.codingPath + [RestingCodingKey(intValue: index)])
     }
 
     deinit {
@@ -279,7 +255,7 @@ private class _ReferencingEncoder: _MultipartFormDataEncoder {
     }
 }
 
-extension _MultipartFormDataEncoder: SingleValueEncodingContainer {
+extension _QueryParameterEncoder: SingleValueEncodingContainer {
     func encodeNil() throws {
         assertCanEncodeNewValue()
         node = .null
@@ -287,10 +263,6 @@ extension _MultipartFormDataEncoder: SingleValueEncodingContainer {
 
     func encode<T>(_ value: T) throws where T: Encodable {
         assertCanEncodeNewValue()
-        if let file = value as? MultipartFile {
-            try encode(file)
-            return
-        }
         if let date = value as? Date {
             try encode(date)
             return
@@ -302,79 +274,74 @@ extension _MultipartFormDataEncoder: SingleValueEncodingContainer {
         try value.encode(to: self)
     }
 
-    func encode(_ file: MultipartFile) throws {
-        assertCanEncodeNewValue()
-        node = .file(file)
-    }
-
     func encode(_ value: Bool) throws {
         assertCanEncodeNewValue()
-        self.node = .data("\(value)".data(using: .utf8)!)
+        self.node = .string(value.description)
     }
 
     func encode(_ value: String) throws {
         assertCanEncodeNewValue()
-        self.node = .data(value.data(using: .utf8)!)
+        self.node = .string(value)
     }
 
     func encode(_ value: Double) throws {
         assertCanEncodeNewValue()
-        self.node = .data("\(value)".data(using: .utf8)!)
+        self.node = .string("\(value)")
     }
 
     func encode(_ value: Float) throws {
         assertCanEncodeNewValue()
-        self.node = .data("\(value)".data(using: .utf8)!)
+        self.node = .string("\(value)")
     }
 
     func encode(_ value: Int) throws {
         assertCanEncodeNewValue()
-        self.node = .data("\(value)".data(using: .utf8)!)
+        self.node = .string("\(value)")
     }
 
     func encode(_ value: Int8) throws {
         assertCanEncodeNewValue()
-        self.node = .data("\(value)".data(using: .utf8)!)
+        self.node = .string("\(value)")
     }
 
     func encode(_ value: Int16) throws {
         assertCanEncodeNewValue()
-        self.node = .data("\(value)".data(using: .utf8)!)
+        self.node = .string("\(value)")
     }
 
     func encode(_ value: Int32) throws {
         assertCanEncodeNewValue()
-        self.node = .data("\(value)".data(using: .utf8)!)
+        self.node = .string("\(value)")
     }
 
     func encode(_ value: Int64) throws {
         assertCanEncodeNewValue()
-        self.node = .data("\(value)".data(using: .utf8)!)
+        self.node = .string("\(value)")
     }
 
     func encode(_ value: UInt) throws {
         assertCanEncodeNewValue()
-        self.node = .data("\(value)".data(using: .utf8)!)
+        self.node = .string("\(value)")
     }
 
     func encode(_ value: UInt8) throws {
         assertCanEncodeNewValue()
-        self.node = .data("\(value)".data(using: .utf8)!)
+        self.node = .string("\(value)")
     }
 
     func encode(_ value: UInt16) throws {
         assertCanEncodeNewValue()
-        self.node = .data("\(value)".data(using: .utf8)!)
+        self.node = .string("\(value)")
     }
 
     func encode(_ value: UInt32) throws {
         assertCanEncodeNewValue()
-        self.node = .data("\(value)".data(using: .utf8)!)
+        self.node = .string("\(value)")
     }
 
     func encode(_ value: UInt64) throws {
         assertCanEncodeNewValue()
-        self.node = .data("\(value)".data(using: .utf8)!)
+        self.node = .string("\(value)")
     }
 
     func encode(_ value: Date) throws {
@@ -398,10 +365,8 @@ extension _MultipartFormDataEncoder: SingleValueEncodingContainer {
     func encode(_ value: Data) throws {
         assertCanEncodeNewValue()
         switch options.dataEncodingStrategy {
-        case .raw:
-            self.node = .data(value)
         case .base64:
-            self.node = .data(value.base64EncodedData())
+            self.node = .string(value.base64EncodedString())
         case .custom(let callback):
             try callback(value, self)
         }
@@ -414,9 +379,9 @@ extension _MultipartFormDataEncoder: SingleValueEncodingContainer {
 }
 
 private struct _KeyedEncodingContainer<Key: CodingKey> : KeyedEncodingContainerProtocol {
-    private let encoder: _MultipartFormDataEncoder
+    private let encoder: _QueryParameterEncoder
 
-    init(referencing encoder: _MultipartFormDataEncoder) {
+    init(referencing encoder: _QueryParameterEncoder) {
         self.encoder = encoder
     }
 
@@ -427,10 +392,6 @@ private struct _KeyedEncodingContainer<Key: CodingKey> : KeyedEncodingContainerP
     }
 
     func encode<T>(_ value: T, forKey key: Key) throws where T: Encodable {
-        if let file = value as? MultipartFile {
-            try encoder(for: key).encode(file)
-            return
-        }
         try encoder(for: key).encode(value)
     }
 
@@ -444,7 +405,7 @@ private struct _KeyedEncodingContainer<Key: CodingKey> : KeyedEncodingContainerP
     }
 
     func superEncoder() -> Encoder {
-        return encoder(for: MultipartKey(stringValue: "super"))
+        return encoder(for: RestingCodingKey(stringValue: "super"))
     }
 
     func superEncoder(forKey key: Key) -> Encoder {
@@ -457,9 +418,9 @@ private struct _KeyedEncodingContainer<Key: CodingKey> : KeyedEncodingContainerP
 }
 
 private struct _UnkeyedEncodingContainer: UnkeyedEncodingContainer {
-    private let encoder: _MultipartFormDataEncoder
+    private let encoder: _QueryParameterEncoder
 
-    init(referencing encoder: _MultipartFormDataEncoder) {
+    init(referencing encoder: _QueryParameterEncoder) {
         self.encoder = encoder
     }
 
@@ -473,10 +434,6 @@ private struct _UnkeyedEncodingContainer: UnkeyedEncodingContainer {
     }
 
     func encode<T>(_ value: T) throws where T: Encodable {
-        if let file = value as? MultipartFile {
-            try currentEncoder.encode(file)
-            return
-        }
         try currentEncoder.encode(value)
     }
 
@@ -488,7 +445,7 @@ private struct _UnkeyedEncodingContainer: UnkeyedEncodingContainer {
     func superEncoder() -> Encoder { return currentEncoder }
 
     private var currentEncoder: _ReferencingEncoder {
-        defer { encoder.array.append(.data(Data())) }
+        defer { encoder.array.append(.string("")) }
         return encoder.encoder(at: count)
     }
 }

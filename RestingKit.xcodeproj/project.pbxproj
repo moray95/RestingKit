@@ -10,6 +10,9 @@
 		113F4D044A3C62A3E3AF1930 /* Pods_RestingKit_iOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00A2021AE9FDF800B7B0A6E6 /* Pods_RestingKit_iOS_Example.framework */; };
 		2F825988F6A79CA12B80651E /* Pods_RestingKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C4DE49E8D4F427764C8D27B /* Pods_RestingKitTests.framework */; };
 		C3523DCE4AB6C42F94843CA1 /* Pods_RestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F491190AF89288A037C5795 /* Pods_RestingKit.framework */; };
+		CEB342852247BB01006911E8 /* QueryNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB342842247BB01006911E8 /* QueryNode.swift */; };
+		CEB342872247BC0E006911E8 /* RestingCodingKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB342862247BC0E006911E8 /* RestingCodingKey.swift */; };
+		CEB342892247BC80006911E8 /* QueryParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB342882247BC80006911E8 /* QueryParameterEncoder.swift */; };
 		CEE286CA224168D800EF945A /* RestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE286C0224168D800EF945A /* RestingKit.framework */; };
 		CEE286CF224168D800EF945A /* RestingKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE286CE224168D800EF945A /* RestingKitTests.swift */; };
 		CEE286D1224168D800EF945A /* RestingKit.h in Headers */ = {isa = PBXBuildFile; fileRef = CEE286C3224168D800EF945A /* RestingKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -29,7 +32,6 @@
 		CEE28702224169CC00EF945A /* HTTPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE286EA224169CC00EF945A /* HTTPError.swift */; };
 		CEE28703224169CC00EF945A /* Nothing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE286EC224169CC00EF945A /* Nothing.swift */; };
 		CEE28704224169CC00EF945A /* MultipartFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE286ED224169CC00EF945A /* MultipartFile.swift */; };
-		CEE28705224169CC00EF945A /* DecodingUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE286EE224169CC00EF945A /* DecodingUtils.swift */; };
 		CEE28706224169CC00EF945A /* MultipartNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE286EF224169CC00EF945A /* MultipartNode.swift */; };
 		CEE28708224169CC00EF945A /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE286F1224169CC00EF945A /* String.swift */; };
 		CEE28709224169CC00EF945A /* MultipartFormDataEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE286F2224169CC00EF945A /* MultipartFormDataEncoder.swift */; };
@@ -78,6 +80,9 @@
 		6C4DE49E8D4F427764C8D27B /* Pods_RestingKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RestingKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9258C40E3C0EE6F156D071CF /* Pods-RestingKit-iOS-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RestingKit-iOS-Example.debug.xcconfig"; path = "Target Support Files/Pods-RestingKit-iOS-Example/Pods-RestingKit-iOS-Example.debug.xcconfig"; sourceTree = "<group>"; };
 		925E5A55E53EDAD207033651 /* Pods-RestingKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RestingKit.debug.xcconfig"; path = "Target Support Files/Pods-RestingKit/Pods-RestingKit.debug.xcconfig"; sourceTree = "<group>"; };
+		CEB342842247BB01006911E8 /* QueryNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryNode.swift; sourceTree = "<group>"; };
+		CEB342862247BC0E006911E8 /* RestingCodingKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestingCodingKey.swift; sourceTree = "<group>"; };
+		CEB342882247BC80006911E8 /* QueryParameterEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryParameterEncoder.swift; sourceTree = "<group>"; };
 		CEE286C0224168D800EF945A /* RestingKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RestingKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEE286C3224168D800EF945A /* RestingKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RestingKit.h; sourceTree = "<group>"; };
 		CEE286C4224168D800EF945A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -100,7 +105,6 @@
 		CEE286EA224169CC00EF945A /* HTTPError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPError.swift; sourceTree = "<group>"; };
 		CEE286EC224169CC00EF945A /* Nothing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Nothing.swift; sourceTree = "<group>"; };
 		CEE286ED224169CC00EF945A /* MultipartFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartFile.swift; sourceTree = "<group>"; };
-		CEE286EE224169CC00EF945A /* DecodingUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodingUtils.swift; sourceTree = "<group>"; };
 		CEE286EF224169CC00EF945A /* MultipartNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartNode.swift; sourceTree = "<group>"; };
 		CEE286F1224169CC00EF945A /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		CEE286F2224169CC00EF945A /* MultipartFormDataEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartFormDataEncoder.swift; sourceTree = "<group>"; };
@@ -165,6 +169,18 @@
 				6C4DE49E8D4F427764C8D27B /* Pods_RestingKitTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CEB342832247BAB7006911E8 /* Encoding */ = {
+			isa = PBXGroup;
+			children = (
+				CEE286F2224169CC00EF945A /* MultipartFormDataEncoder.swift */,
+				CEB342882247BC80006911E8 /* QueryParameterEncoder.swift */,
+				CEE286EF224169CC00EF945A /* MultipartNode.swift */,
+				CEB342842247BB01006911E8 /* QueryNode.swift */,
+				CEB342862247BC0E006911E8 /* RestingCodingKey.swift */,
+			);
+			path = Encoding;
 			sourceTree = "<group>";
 		};
 		CEE286B6224168D800EF945A = {
@@ -249,12 +265,10 @@
 		CEE286EB224169CC00EF945A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				CEB342832247BAB7006911E8 /* Encoding */,
 				CEE286EC224169CC00EF945A /* Nothing.swift */,
 				CEE286ED224169CC00EF945A /* MultipartFile.swift */,
-				CEE286EE224169CC00EF945A /* DecodingUtils.swift */,
-				CEE286EF224169CC00EF945A /* MultipartNode.swift */,
 				CEE286F1224169CC00EF945A /* String.swift */,
-				CEE286F2224169CC00EF945A /* MultipartFormDataEncoder.swift */,
 				CEE286F3224169CC00EF945A /* ProgressablePromise.swift */,
 			);
 			path = Utils;
@@ -617,7 +631,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEE28705224169CC00EF945A /* DecodingUtils.swift in Sources */,
+				CEB342852247BB01006911E8 /* QueryNode.swift in Sources */,
 				CEE2870B224169CC00EF945A /* RestingInterceptor.swift in Sources */,
 				CEE28704224169CC00EF945A /* MultipartFile.swift in Sources */,
 				CEE28708224169CC00EF945A /* String.swift in Sources */,
@@ -634,6 +648,8 @@
 				CEE28700224169CC00EF945A /* HTTPDataResponse.swift in Sources */,
 				CEE286FB224169CC00EF945A /* RequestResponseLoggingInterceptor.swift in Sources */,
 				CEE286FE224169CC00EF945A /* HTTPClient.swift in Sources */,
+				CEB342872247BC0E006911E8 /* RestingCodingKey.swift in Sources */,
+				CEB342892247BC80006911E8 /* QueryParameterEncoder.swift in Sources */,
 				CEE286F9224169CC00EF945A /* Endpoint.swift in Sources */,
 				CEE286FC224169CC00EF945A /* AlamofireClient.swift in Sources */,
 				CEE28709224169CC00EF945A /* MultipartFormDataEncoder.swift in Sources */,

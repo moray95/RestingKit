@@ -10,15 +10,9 @@ import Foundation
 import RestingKit
 
 enum JSONPlaceholderClient {
-    static let shared: RestingClient = {
-        let decoder = JSONDecoder()
-        let encoder = JSONEncoder()
-        let requestConverter = RestingRequestConverter(jsonEncoder: encoder, jsonDecoder: decoder)
-
-        return RestingClient(baseUrl: "https://jsonplaceholder.typicode.com",
-                             decoder: decoder,
-                             httpClient: AlamofireClient(),
-                             requestConverter: requestConverter,
-                             interceptors: [RequestResponseLoggingInterceptor()])
-    }()
+    static let shared: RestingClient = RestingClient(baseUrl: "https://jsonplaceholder.typicode.com",
+                                                     decoder: JSONDecoder(),
+                                                     httpClient: AlamofireClient(),
+                                                     requestConverter: RestingRequestConverter(),
+                                                     interceptors: [RequestResponseLoggingInterceptor()])
 }

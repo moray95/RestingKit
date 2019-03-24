@@ -10,23 +10,27 @@ import Foundation
 import Mustache
 
 class RestingHTTPRequestConvertible<RequestType: Encodable, ResponseType: Decodable> {
+    enum Error: Swift.Error {
+        case invalidPath
+    }
+
     let request: RestingRequest<RequestType, ResponseType>
     let baseUrl: String
     let jsonEncoder: JSONEncoder
-    let jsonDecoder: JSONDecoder
+    let queryParameterEncoder: QueryParameterEncoder
     let multipartFormDataEncoder: MultipartFormDataEncoder
     let forUpload: Bool
 
     init(request: RestingRequest<RequestType, ResponseType>,
          baseUrl: String,
          jsonEncoder: JSONEncoder,
-         jsonDecoder: JSONDecoder,
+         queryParameterEncoder: QueryParameterEncoder,
          multipartFormDataEncoder: MultipartFormDataEncoder,
          forUpload: Bool) {
         self.request = request
         self.baseUrl = baseUrl
         self.jsonEncoder = jsonEncoder
-        self.jsonDecoder = jsonDecoder
+        self.queryParameterEncoder = queryParameterEncoder
         self.multipartFormDataEncoder = multipartFormDataEncoder
         self.forUpload = forUpload
     }
@@ -45,9 +49,6 @@ class RestingHTTPRequestConvertible<RequestType: Encodable, ResponseType: Decoda
             urlRequest.allHTTPHeaderFields!["content-type"] = formData.contentType
             return try StreamedHTTPRequest(urlRequest: urlRequest, formData: formData)
         case .query:
-            let jsonData = try jsonEncoder.encode(request.body)
-            let dictionary = try jsonDecoder.decode([String: Any].self, from: jsonData)
-            urlRequest = try URLEncoding.queryString.encode(urlRequest, with: dictionary)
             return DefaultHTTPRequest(urlRequest: urlRequest)
         }
     }
@@ -55,9 +56,25 @@ class RestingHTTPRequestConvertible<RequestType: Encodable, ResponseType: Decoda
     func asURLRequest(withBody: Bool) throws -> URLRequest {
         let template = try Template(string: request.endpoint.path)
         let path = try template.render(request.pathVariables)
-        var urlRequest = try URLRequest(url: "\(baseUrl)\(path)",
+
+        guard let baseUrl = URL(string: baseUrl),
+            let fullUrl = URL(string: path, relativeTo: baseUrl),
+            var components = URLComponents(url: fullUrl, resolvingAgainstBaseURL: true) else {
+            throw Error.invalidPath
+        }
+
+        if request.endpoint.encoding == .query {
+            let queryItems = try queryParameterEncoder.encode(request.body)
+            // Prevent URL ending with question mark when no parameter is given
+            if !queryItems.isEmpty {
+                components.queryItems = queryItems
+            }
+        }
+
+        var urlRequest = try URLRequest(url: try components.asURL(),
                                         method: request.endpoint.method,
                                         headers: request.headers)
+
         guard withBody else {
             return urlRequest
         }
@@ -71,9 +88,7 @@ class RestingHTTPRequestConvertible<RequestType: Encodable, ResponseType: Decoda
             urlRequest.allHTTPHeaderFields!["content-type"] = formData.contentType
             urlRequest.httpBody = try formData.encode()
         case .query:
-            let jsonData = try jsonEncoder.encode(request.body)
-            let dictionary = try jsonDecoder.decode([String: Any].self, from: jsonData)
-            urlRequest = try URLEncoding.queryString.encode(urlRequest, with: dictionary)
+            break
         }
 
         return urlRequest
