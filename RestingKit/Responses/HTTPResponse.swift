@@ -11,6 +11,8 @@ import Foundation
 public class HTTPResponse<T>: HTTPResponseType {
     public typealias BodyType = T
 
+    /// The status code of the response
+    public let status: Int
     /// The decoded body of the response.
     public let body: T
     /// The headers of the response.
@@ -19,10 +21,12 @@ public class HTTPResponse<T>: HTTPResponseType {
     ///
     /// Creates a new `HTTPResponse`.
     ///
+    /// - parameter status: The status code of the response.
     /// - parameter body: The decoded body of the response.
     /// - parameter headers: The headers of the response.
     ///
-    public init(body: T, headers: [String: String]) {
+    public init(status: Int, body: T, headers: [String: String]) {
+        self.status = status
         self.body = body
         self.headers = headers
     }
@@ -34,13 +38,13 @@ extension HTTPResponse {
         let object = try decoder.decode(T.self, from: data)
         //swiftlint:disable:next force_cast
         let headers = response.urlResponse.allHeaderFields as! [String: String]
-        return HTTPResponse<T>(body: object, headers: headers)
+        return HTTPResponse<T>(status: response.urlResponse.statusCode, body: object, headers: headers)
     }
 
     static func empty(response: HTTPDataResponse) -> HTTPResponse<Void> {
         //swiftlint:disable:next force_cast
         let headers = response.urlResponse.allHeaderFields as! [String: String]
-        return HTTPResponse<Void>(body: (), headers: headers)
+        return HTTPResponse<Void>(status: response.urlResponse.statusCode, body: (), headers: headers)
     }
 
     static func nullable<T: Decodable>(response: HTTPDataResponse,
@@ -49,9 +53,9 @@ extension HTTPResponse {
         let headers = response.urlResponse.allHeaderFields as! [String: String]
         let data = response.data
         guard !data.isEmpty else {
-            return HTTPResponse<T?>(body: nil, headers: headers)
+            return HTTPResponse<T?>(status: response.urlResponse.statusCode, body: nil, headers: headers)
         }
         let object = try decoder.decode(T.self, from: data)
-        return HTTPResponse<T?>(body: object, headers: headers)
+        return HTTPResponse<T?>(status: response.urlResponse.statusCode, body: object, headers: headers)
     }
 }
