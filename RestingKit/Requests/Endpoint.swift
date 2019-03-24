@@ -25,18 +25,18 @@ public enum RequestEncoding {
 /// - parameter ResponseType: The type of th response.
 ///
 public struct Endpoint<RequestType, ResponseType> {
-    public let path: String
     public let method: HTTPMethod
+    public let path: String
     public let encoding: RequestEncoding
 
     ///
     /// Creates a new `Endpoint`.
     ///
-    /// - parameter path: The path of the endpoint.
     /// - parameter method: The method to use for the endpoint.
+    /// - parameter path: The path of the endpoint.
     /// - parameter encoding: The parameter to use for the endpoint.
     ///
-    public init(path: String, method: HTTPMethod, encoding: RequestEncoding) {
+    public init(_ method: HTTPMethod, _ path: String, encoding: RequestEncoding) {
         self.path = path
         self.method = method
         self.encoding = encoding

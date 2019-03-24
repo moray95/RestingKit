@@ -73,8 +73,8 @@ let restingClient = RestingClient(baseUrl: "https://jsonplaceholder.typicode.com
        let body: String
    }
 
-   let createPostEndpoint = Endpoint<PostCreateModel, PostModel>(path: "/posts",
-                                                                 method: .post,
+   let createPostEndpoint = Endpoint<PostCreateModel, PostModel>(.post,
+                                                                 "/posts",
                                                                  encoding: .json)
    ```
 
@@ -106,8 +106,8 @@ let restingClient = RestingClient(baseUrl: "https://jsonplaceholder.typicode.com
 If a request might provide a response that might be empty, you can create an `Endpoint` with an optional response type. That way, if the response is empty, `nil` will be returned.
 
 ```swift
-let createPostEndpoint = Endpoint<PostCreateModel, PostModel?>(path: "/posts",
-                                                               method: .post,
+let createPostEndpoint = Endpoint<PostCreateModel, PostModel?>(.post,
+                                                               "/posts",
                                                                encoding: .json)
 let postCreateModel = PostCreateModel(userId: 1,
                                       title: "Hello world",
@@ -133,8 +133,8 @@ restingClient.perform(request).done { response in
 The provided `RestingRequestConverter` allows templating in paths by using [Mustache.swift](https://github.com/groue/GRMustache.swift).
 
 ```swift
-let getPostEndpoint = Endpoint<Nothing, PostModel>(path: "/posts/{{post_id}}",
-                                                   method: .get,
+let getPostEndpoint = Endpoint<Nothing, PostModel>(.get,
+                                                   "/posts/{{post_id}}",
                                                    encoding: .query)
 let request = RestingRequest(endpoint: getPostEndpoint,
                              body: Nothing(),
@@ -152,8 +152,8 @@ restingClient.perform(request).done { response in
 It is possible to perform a multipart form data request with RestingKit. The only thing to make the request is to set the `Endpoint`'s encoding to `.multipartFormData`:
 
 ```swift
-let multipartEndpoint = Endpoint<MyModel, Nothing>(path: "/some_resource",
-                                                   method: .post,
+let multipartEndpoint = Endpoint<MyModel, Nothing>(.post,
+                                                   "/some_resource",
                                                    encoding: .multipartFormData)
 ```
 
