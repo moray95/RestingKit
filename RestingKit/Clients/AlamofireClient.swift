@@ -17,12 +17,19 @@ public class AlamofireClient: HTTPClient {
         case unknown
     }
 
-    /// Creates a new `AlamofireClient`
-    public init() { }
+    private let sessionManager: SessionManager
+
+    //// Creates a new `AlamofireClient`.
+    ///
+    /// - parameter sessionManager: The session manager to use for sending requests.
+    ///
+    public init(sessionManager: SessionManager = SessionManager.default) {
+        self.sessionManager = sessionManager
+    }
 
     public func perform(urlRequest: URLRequest) -> Promise<HTTPDataResponse> {
         return Promise { resolver in
-            Alamofire.request(urlRequest).responseData {
+            sessionManager.request(urlRequest).responseData {
                 self.handle(dataResponse: $0, resolver: resolver)
             }
         }
@@ -33,7 +40,7 @@ public class AlamofireClient: HTTPClient {
             return perform(urlRequest: request.urlRequest)
         }
         return Promise { resolver in
-            Alamofire.upload(url, with: request.urlRequest).responseData {
+            sessionManager.upload(url, with: request.urlRequest).responseData {
                 self.handle(dataResponse: $0, resolver: resolver)
             }
         }
@@ -49,7 +56,7 @@ public class AlamofireClient: HTTPClient {
     public func upload(request: URLRequest,
                        fileUrl: URL) -> ProgressablePromise<HTTPDataResponse> {
         return ProgressablePromise<HTTPDataResponse> { resolver, progressHandler in
-            Alamofire.upload(fileUrl, with: request).uploadProgress(closure: progressHandler).responseData {
+            sessionManager.upload(fileUrl, with: request).uploadProgress(closure: progressHandler).responseData {
                 self.handle(dataResponse: $0, resolver: resolver)
             }
         }
