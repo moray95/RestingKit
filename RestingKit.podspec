@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'RestingKit'
-    s.version          = '0.0.2'
+    s.version          = '0.0.3'
     s.summary          = 'Networking made easy.'
 
     s.description      = File.read('README.md')
