@@ -284,7 +284,7 @@ open class RestingClient {
             var interceptors = interceptors
             let nextInterceptor = interceptors.removeFirst()
             return nextInterceptor.intercept(request: request) {
-                runInterceptors($0, interceptors: interceptors, resolver: resolver)
+                self.runInterceptors($0, interceptors: interceptors, resolver: resolver)
             }
     }
 

@@ -36,5 +36,5 @@ public protocol RestingInterceptor {
     ///            is to be sent. The implementation might decide to not send the request
     ///            or modify the request sent by passing another request to `execution`.
     ///
-    func intercept(request: HTTPRequest, execution: Execution) -> ProgressablePromise<HTTPDataResponse>
+    func intercept(request: HTTPRequest, execution: @escaping Execution) -> ProgressablePromise<HTTPDataResponse>
 }

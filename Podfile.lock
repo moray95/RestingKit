@@ -10,7 +10,7 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (6.8.3):
     - PromiseKit/CorePromise
-  - RestingKit (0.0.1):
+  - RestingKit (0.0.2):
     - Alamofire (~> 4.8)
     - GRMustache.swift4 (~> 3.0)
     - PromiseKit (~> 6.8)
@@ -38,9 +38,9 @@ SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   GRMustache.swift4: 86ae782779f723ed8dd1625a63df193b2eed3bce
   PromiseKit: 94c6e781838c5bf4717677d0d882b0e7250c80fc
-  RestingKit: f8f245f4fe2b4d0a1dc297efda13a610122adc44
+  RestingKit: cc18ae1595895086a9d4be7a0a19397fa85ec817
   SwiftLint: a54bf1fe12b55c68560eb2a7689dfc81458508f7
 
 PODFILE CHECKSUM: 42c809f3a2a3cbed497bc2a798db9e3c4daf94b7
 
-COCOAPODS: 1.6.0
+COCOAPODS: 1.7.5
