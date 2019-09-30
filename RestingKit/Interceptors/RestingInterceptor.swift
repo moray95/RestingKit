@@ -22,7 +22,9 @@ import PromiseKit
 /// ```
 ///
 public protocol RestingInterceptor {
+    /// Represents the interceptor execution chain.
     typealias Execution = (HTTPRequest) -> ProgressablePromise<HTTPDataResponse>
+
     ///
     /// Intercepts a sending request. The response to the request can be
     /// retrieved from the promise returned by `execution`.

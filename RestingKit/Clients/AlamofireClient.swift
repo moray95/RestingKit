@@ -19,20 +19,12 @@ public class AlamofireClient: HTTPClient {
 
     private let sessionManager: SessionManager
 
-    //// Creates a new `AlamofireClient`.
+    /// Creates a new `AlamofireClient`.
     ///
     /// - parameter sessionManager: The session manager to use for sending requests.
     ///
     public init(sessionManager: SessionManager = SessionManager.default) {
         self.sessionManager = sessionManager
-    }
-
-    public func perform(urlRequest: URLRequest) -> Promise<HTTPDataResponse> {
-        return Promise { resolver in
-            sessionManager.request(urlRequest).responseData {
-                self.handle(dataResponse: $0, resolver: resolver)
-            }
-        }
     }
 
     public func perform(request: HTTPRequest) -> Promise<HTTPDataResponse> {
@@ -46,6 +38,14 @@ public class AlamofireClient: HTTPClient {
         }
     }
 
+    private func perform(urlRequest: URLRequest) -> Promise<HTTPDataResponse> {
+        return Promise { resolver in
+            sessionManager.request(urlRequest).responseData {
+                self.handle(dataResponse: $0, resolver: resolver)
+            }
+        }
+    }
+
     public func upload(request: HTTPRequest) -> ProgressablePromise<HTTPDataResponse> {
         guard let fileUrl = request.fileUrl else {
             return perform(request: request).asProgressable()
@@ -53,8 +53,8 @@ public class AlamofireClient: HTTPClient {
         return upload(request: request.urlRequest, fileUrl: fileUrl)
     }
 
-    public func upload(request: URLRequest,
-                       fileUrl: URL) -> ProgressablePromise<HTTPDataResponse> {
+    private func upload(request: URLRequest,
+                        fileUrl: URL) -> ProgressablePromise<HTTPDataResponse> {
         return ProgressablePromise<HTTPDataResponse> { resolver, progressHandler in
             sessionManager.upload(fileUrl, with: request).uploadProgress(closure: progressHandler).responseData {
                 self.handle(dataResponse: $0, resolver: resolver)

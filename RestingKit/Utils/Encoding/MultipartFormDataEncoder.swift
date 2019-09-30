@@ -5,6 +5,8 @@
 //  Created by Moray on 2/23/19.
 //
 
+// swiftlint:disable file_length
+
 import Alamofire
 import Foundation
 
@@ -163,8 +165,8 @@ public class MultipartFormDataEncoder {
 }
 
 private class _MultipartFormDataEncoder: Encoder {
-    private(set) var codingPath: [CodingKey]
-    private(set) var userInfo: [CodingUserInfoKey: Any] = [:]
+    fileprivate var codingPath: [CodingKey]
+    fileprivate var userInfo: [CodingUserInfoKey: Any] = [:]
 
     fileprivate var node: MultipartNode?
 
@@ -179,14 +181,14 @@ private class _MultipartFormDataEncoder: Encoder {
     }
 
     private var canEncodeNewValue: Bool { return node == nil }
-    let options: MultipartFormDataEncoder.Options
+    fileprivate let options: MultipartFormDataEncoder.Options
 
-    init(options: MultipartFormDataEncoder.Options, codingPath: [CodingKey]) {
+    fileprivate init(options: MultipartFormDataEncoder.Options, codingPath: [CodingKey]) {
         self.options = options
         self.codingPath = codingPath
     }
 
-    func container<Key>(keyedBy type: Key.Type) -> KeyedEncodingContainer<Key> {
+    fileprivate func container<Key>(keyedBy type: Key.Type) -> KeyedEncodingContainer<Key> {
         switch node {
         case .some(.object):
             break
@@ -200,7 +202,7 @@ private class _MultipartFormDataEncoder: Encoder {
         return .init(_KeyedEncodingContainer<Key>(referencing: self))
     }
 
-    func unkeyedContainer() -> UnkeyedEncodingContainer {
+    fileprivate func unkeyedContainer() -> UnkeyedEncodingContainer {
         switch node {
         case .some(.array):
             break
@@ -214,7 +216,7 @@ private class _MultipartFormDataEncoder: Encoder {
         return _UnkeyedEncodingContainer(referencing: self)
     }
 
-    func singleValueContainer() -> SingleValueEncodingContainer {
+    fileprivate func singleValueContainer() -> SingleValueEncodingContainer {
         return self
     }
 
@@ -236,13 +238,13 @@ private class _ReferencingEncoder: _MultipartFormDataEncoder {
     private let encoder: _MultipartFormDataEncoder
     private let reference: Reference
 
-    init(referencing encoder: _MultipartFormDataEncoder, key: CodingKey) {
+    fileprivate init(referencing encoder: _MultipartFormDataEncoder, key: CodingKey) {
         self.encoder = encoder
         reference = .object(key.stringValue)
         super.init(options: encoder.options, codingPath: encoder.codingPath + [key])
     }
 
-    init(referencing encoder: _MultipartFormDataEncoder, at index: Int) {
+    fileprivate init(referencing encoder: _MultipartFormDataEncoder, at index: Int) {
         self.encoder = encoder
         reference = .array(index)
         super.init(options: encoder.options, codingPath: encoder.codingPath + [RestingCodingKey(intValue: index)])
@@ -393,20 +395,19 @@ extension _MultipartFormDataEncoder: SingleValueEncodingContainer {
     }
 }
 
-private struct _KeyedEncodingContainer<Key: CodingKey> : KeyedEncodingContainerProtocol {
+private struct _KeyedEncodingContainer<Key: CodingKey>: KeyedEncodingContainerProtocol {
     private let encoder: _MultipartFormDataEncoder
+    fileprivate var codingPath: [CodingKey] { return encoder.codingPath }
 
-    init(referencing encoder: _MultipartFormDataEncoder) {
+    fileprivate init(referencing encoder: _MultipartFormDataEncoder) {
         self.encoder = encoder
     }
 
-    var codingPath: [CodingKey] { return encoder.codingPath }
-
-    func encodeNil(forKey key: Key) throws {
+    fileprivate func encodeNil(forKey key: Key) throws {
         encoder.node?[key.stringValue] = .null
     }
 
-    func encode<T>(_ value: T, forKey key: Key) throws where T: Encodable {
+    fileprivate func encode<T>(_ value: T, forKey key: Key) throws where T: Encodable {
         if let file = value as? MultipartFile {
             try encoder(for: key).encode(file)
             return
@@ -414,20 +415,20 @@ private struct _KeyedEncodingContainer<Key: CodingKey> : KeyedEncodingContainerP
         try encoder(for: key).encode(value)
     }
 
-    func nestedContainer<NestedKey>(keyedBy type: NestedKey.Type,
-                                    forKey key: Key) -> KeyedEncodingContainer<NestedKey> {
+    fileprivate func nestedContainer<NestedKey>(keyedBy type: NestedKey.Type,
+                                                forKey key: Key) -> KeyedEncodingContainer<NestedKey> {
         return encoder(for: key).container(keyedBy: type)
     }
 
-    func nestedUnkeyedContainer(forKey key: Key) -> UnkeyedEncodingContainer {
+    fileprivate func nestedUnkeyedContainer(forKey key: Key) -> UnkeyedEncodingContainer {
         return encoder(for: key).unkeyedContainer()
     }
 
-    func superEncoder() -> Encoder {
+    fileprivate func superEncoder() -> Encoder {
         return encoder(for: RestingCodingKey(stringValue: "super"))
     }
 
-    func superEncoder(forKey key: Key) -> Encoder {
+    fileprivate func superEncoder(forKey key: Key) -> Encoder {
         return encoder(for: key)
     }
 
@@ -439,20 +440,20 @@ private struct _KeyedEncodingContainer<Key: CodingKey> : KeyedEncodingContainerP
 private struct _UnkeyedEncodingContainer: UnkeyedEncodingContainer {
     private let encoder: _MultipartFormDataEncoder
 
-    init(referencing encoder: _MultipartFormDataEncoder) {
+    fileprivate var codingPath: [CodingKey] { return encoder.codingPath }
+    fileprivate var count: Int { return encoder.array.count }
+
+    fileprivate init(referencing encoder: _MultipartFormDataEncoder) {
         self.encoder = encoder
     }
 
-    // MARK: - Swift.UnkeyedEncodingContainer Methods
+    // MARK: - Swift.UnkeyedEncodingContainer Meth
 
-    var codingPath: [CodingKey] { return encoder.codingPath }
-    var count: Int { return encoder.array.count }
-
-    func encodeNil() throws {
+    fileprivate func encodeNil() throws {
         encoder.node = .null
     }
 
-    func encode<T>(_ value: T) throws where T: Encodable {
+    fileprivate func encode<T>(_ value: T) throws where T: Encodable {
         if let file = value as? MultipartFile {
             try currentEncoder.encode(file)
             return
@@ -460,12 +461,12 @@ private struct _UnkeyedEncodingContainer: UnkeyedEncodingContainer {
         try currentEncoder.encode(value)
     }
 
-    func nestedContainer<NestedKey>(keyedBy type: NestedKey.Type) -> KeyedEncodingContainer<NestedKey> {
+    fileprivate func nestedContainer<NestedKey>(keyedBy type: NestedKey.Type) -> KeyedEncodingContainer<NestedKey> {
         return currentEncoder.container(keyedBy: type)
     }
 
-    func nestedUnkeyedContainer() -> UnkeyedEncodingContainer { return currentEncoder.unkeyedContainer() }
-    func superEncoder() -> Encoder { return currentEncoder }
+    fileprivate func nestedUnkeyedContainer() -> UnkeyedEncodingContainer { return currentEncoder.unkeyedContainer() }
+    fileprivate func superEncoder() -> Encoder { return currentEncoder }
 
     private var currentEncoder: _ReferencingEncoder {
         defer { encoder.array.append(.data(Data())) }

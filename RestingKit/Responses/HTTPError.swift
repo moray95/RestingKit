@@ -16,6 +16,7 @@ public class HTTPError: Error {
     /// The headers of the response.
     public let headers: [String: String]
 
+    /// Creates a new HTTPError with the given status code, headers and data
     public init(status: Int, headers: [String: String], data: Data) {
         self.status = status
         self.headers = headers

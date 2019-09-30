@@ -65,7 +65,7 @@ open class RestingClient {
     /// - parameter interceptors: `RestingInterceptor`s to run when sending each request and response.
     ///
     public init(baseUrl: String,
-                decoder: JSONDecoder,
+                decoder: JSONDecoder = JSONDecoder(),
                 httpClient: HTTPClient = AlamofireClient(),
                 requestConverter: RequestConverter,
                 interceptors: [RestingInterceptor] = []) {

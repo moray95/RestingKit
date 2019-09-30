@@ -14,9 +14,13 @@ import Foundation
 /// - parameter ResponseType: The type of response.
 ///
 open class RestingRequest<RequestType, ResponseType> {
+    /// The endpoint for the request.
     public let endpoint: Endpoint<RequestType, ResponseType>
+    /// The parameters for the request.
     public let body: RequestType
+    /// The headers for the request.
     public let headers: [String: String]
+    /// The variables to substitute in the endpoint's path.
     public let pathVariables: [String: Any]
 
     ///

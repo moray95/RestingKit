@@ -1,24 +1,24 @@
 PODS:
-  - Alamofire (4.8.1)
-  - GRMustache.swift4 (3.0.0)
-  - PromiseKit (6.8.3):
-    - PromiseKit/CorePromise (= 6.8.3)
-    - PromiseKit/Foundation (= 6.8.3)
-    - PromiseKit/UIKit (= 6.8.3)
-  - PromiseKit/CorePromise (6.8.3)
-  - PromiseKit/Foundation (6.8.3):
+  - Alamofire (4.9.0)
+  - GRMustache.swift (4.0.1)
+  - PromiseKit (6.11.0):
+    - PromiseKit/CorePromise (= 6.11.0)
+    - PromiseKit/Foundation (= 6.11.0)
+    - PromiseKit/UIKit (= 6.11.0)
+  - PromiseKit/CorePromise (6.11.0)
+  - PromiseKit/Foundation (6.11.0):
     - PromiseKit/CorePromise
-  - PromiseKit/UIKit (6.8.3):
+  - PromiseKit/UIKit (6.11.0):
     - PromiseKit/CorePromise
-  - RestingKit (0.0.2):
+  - RestingKit (0.0.3):
     - Alamofire (~> 4.8)
-    - GRMustache.swift4 (~> 3.0)
+    - GRMustache.swift (~> 4.0)
     - PromiseKit (~> 6.8)
-  - SwiftLint (0.30.1)
+  - SwiftLint (0.35.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.8)
-  - GRMustache.swift4 (~> 3.0)
+  - GRMustache.swift (~> 4.0)
   - PromiseKit (~> 6.8)
   - RestingKit (from `.`)
   - SwiftLint
@@ -26,7 +26,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
-    - GRMustache.swift4
+    - GRMustache.swift
     - PromiseKit
     - SwiftLint
 
@@ -35,12 +35,12 @@ EXTERNAL SOURCES:
     :path: "."
 
 SPEC CHECKSUMS:
-  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
-  GRMustache.swift4: 86ae782779f723ed8dd1625a63df193b2eed3bce
-  PromiseKit: 94c6e781838c5bf4717677d0d882b0e7250c80fc
-  RestingKit: cc18ae1595895086a9d4be7a0a19397fa85ec817
-  SwiftLint: a54bf1fe12b55c68560eb2a7689dfc81458508f7
+  Alamofire: afc3e7c6db61476cb45cdd23fed06bad03bbc321
+  GRMustache.swift: a6436504284b22b4b05daf5f46f77bd3fe00a9a2
+  PromiseKit: e4863d06976e7dee5e41c04fc7371c16b3600292
+  RestingKit: bae195944208ac16861e59a785a9289b5f59352f
+  SwiftLint: 5553187048b900c91aa03552807681bb6b027846
 
-PODFILE CHECKSUM: 42c809f3a2a3cbed497bc2a798db9e3c4daf94b7
+PODFILE CHECKSUM: d116c56e9acd78106f6d1516af7c5a2816d8aa26
 
 COCOAPODS: 1.7.5

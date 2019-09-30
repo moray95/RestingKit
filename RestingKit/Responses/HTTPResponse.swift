@@ -8,13 +8,11 @@
 import Foundation
 
 /// Represents a higher-level HTTP Response.
-public class HTTPResponse<T>: HTTPResponseType {
-    public typealias BodyType = T
-
+public class HTTPResponse<BodyType>: HTTPResponseType {
     /// The status code of the response
     public let status: Int
     /// The decoded body of the response.
-    public let body: T
+    public let body: BodyType
     /// The headers of the response.
     public let headers: [String: String]
 
@@ -25,7 +23,7 @@ public class HTTPResponse<T>: HTTPResponseType {
     /// - parameter body: The decoded body of the response.
     /// - parameter headers: The headers of the response.
     ///
-    public init(status: Int, body: T, headers: [String: String]) {
+    public init(status: Int, body: BodyType, headers: [String: String]) {
         self.status = status
         self.body = body
         self.headers = headers

@@ -8,6 +8,7 @@
 import Foundation
 import PromiseKit
 
+/// A progress handler, called upon progress changes on a task.
 public typealias ProgressHandler = (Progress) -> Void
 
 private protocol AnyProgressablePromise: AnyObject {
@@ -16,7 +17,9 @@ private protocol AnyProgressablePromise: AnyObject {
     func progress(_ progress: Progress)
 }
 
+/// A  wrapper around PromiseKit's Promise class that supports progress callbacks.
 public class ProgressablePromise<T>: AnyProgressablePromise {
+    /// The underlaying promise.
     public let promise: Promise<T>
 
     private var progressHandlers = [ProgressHandler]()
@@ -24,10 +27,24 @@ public class ProgressablePromise<T>: AnyProgressablePromise {
     fileprivate var children = [AnyProgressablePromise]()
     private var this: ProgressablePromise<T>?
 
+    ///
+    /// Creates a `ProgressablePromise` from the given promise.
+    /// Progress handlers are not suported when using this initlializer.
+    ///
+    /// - parameter promise: The promise to wrap.
+    ///
     public convenience init(promise: Promise<T>) {
         self.init(promise: promise, parent: nil)
     }
 
+    ///
+    /// Creates a new `ProgressablePromise` using the given resolver.
+    ///
+    /// - parameter resolver: The callback that perform the expected task.
+    ///
+    /// The callback is given two parameters: a `Resolver<T>` and a `ProgressHandler`. The callback is expected
+    /// to perform a task, while calling the progress handler on a regular basis and finally resolve the promise.
+    ///
     public convenience init(_ resolver: (Resolver<T>, @escaping ProgressHandler) throws -> Void) {
         let (promise, promiseResolver) = Promise<T>.pending()
         self.init(promise: promise)
@@ -48,6 +65,7 @@ public class ProgressablePromise<T>: AnyProgressablePromise {
         }.cauterize()
     }
 
+    ///  Assign a progress handler to the promise that will be called each time an update to the progress is made.
     public func progress(_ handler: @escaping (Progress) -> Void) -> Promise<T> {
         progressHandlers.append(handler)
         return promise

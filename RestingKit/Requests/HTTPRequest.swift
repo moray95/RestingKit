@@ -9,55 +9,59 @@ import Alamofire
 import Foundation
 
 /// Represents a lower-level HTTP request.
-public protocol HTTPRequest {
+public struct HTTPRequest {
+    enum Error: Swift.Error {
+        case tempFileCreationFailed
+    }
+
     /// The underlaying `URLRequest`
-    var urlRequest: URLRequest { get }
+    public let urlRequest: URLRequest
+
     ///
     /// A URL to a file to be used as a streamed request body.
     /// If `fileURL` is not `nil`, `urlRequest.httpBody` and
     /// `urlRequest.httpBodyStream` **must** be `nil`.
     ///
-    var fileUrl: URL? { get }
-}
+    public let fileUrl: URL?
 
-class StreamedHTTPRequest: HTTPRequest {
-    enum Error: Swift.Error {
-        case tempFileCreationFailed
-    }
-
-    let urlRequest: URLRequest
-    let fileUrl: URL?
-
-    init(urlRequest: URLRequest, fileUrl: URL) {
-        precondition(urlRequest.httpBody == nil)
+    /// Creates a new request from the given `URLRequest` and file URL.
+    /// The request will be streamed if fileURL is not `nil`.
+    public init(urlRequest: URLRequest, fileUrl: URL?) {
         self.urlRequest = urlRequest
         self.fileUrl = fileUrl
+        validate()
     }
 
-    convenience init(urlRequest: URLRequest, formData: MultipartFormData) throws {
+    /// Creates a new non-streamed request from the given `URLRequest`
+    public init(urlRequest: URLRequest) {
+        self.init(urlRequest: urlRequest, fileUrl: nil)
+    }
+
+    /// Creates a new streamed request from the given `URLRequest` and file URL
+    public init(urlRequest: URLRequest, fileUrl: URL) {
+        self.init(urlRequest: urlRequest, fileUrl: fileUrl as URL?)
+    }
+
+    ///
+    /// Creates a new streamed request from the given `URLRequest` and `MultipartFormData`.
+    /// This initializer creates a temporary file to store the given request body and calls `init(urlRequest:fileUrl:)`.
+    ///
+    public init(urlRequest: URLRequest, formData: MultipartFormData) throws {
         guard let tmpFile = NSURL.fileURL(withPathComponents: [NSTemporaryDirectory(), UUID().uuidString]) else {
             throw Error.tempFileCreationFailed
         }
         try formData.writeEncodedData(to: tmpFile)
         self.init(urlRequest: urlRequest, fileUrl: tmpFile)
     }
-}
 
-class DefaultHTTPRequest: HTTPRequest {
-    let urlRequest: URLRequest
-    let fileUrl: URL? = nil
-
-    init(urlRequest: URLRequest) {
-        self.urlRequest = urlRequest
-    }
-}
-
-public class BasicHTTPRequest: HTTPRequest {
-    public let urlRequest: URLRequest
-    public let fileUrl: URL?
-
-    public init(urlRequest: URLRequest, fileUrl: URL?) {
-        self.urlRequest = urlRequest
-        self.fileUrl = fileUrl
+    private func validate() {
+        if fileUrl != nil {
+            if urlRequest.httpBody != nil {
+                fatalError("urlRequest.httpBody must be nil when fileUrl is not nil")
+            }
+            if urlRequest.httpBodyStream != nil {
+                fatalError("urlRequest.httpBodyStream must be nil when fileUrl is not nil")
+            }
+        }
     }
 }

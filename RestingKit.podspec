@@ -12,8 +12,9 @@ Pod::Spec.new do |s|
     s.ios.deployment_target = '10.0'
 
     s.source_files = 'RestingKit/*.swift', 'RestingKit/**/*.swift'
+    s.swift_versions = ['5.0']
 
     s.dependency 'Alamofire', '~> 4.8'
-    s.dependency 'GRMustache.swift4', '~> 3.0'
+    s.dependency 'GRMustache.swift', '~> 4.0'
     s.dependency 'PromiseKit', '~> 6.8'
 end

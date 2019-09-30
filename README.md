@@ -19,7 +19,7 @@ RestingKit is a higher-level wrapper around [Alamofire](https://github.com/Alamo
 
 - iOS 10.0+
 
-- Swift 4.2
+- Swift 5.0+
 
 ## Installation
 
@@ -42,14 +42,10 @@ An example project is included within the repositry. To run it, first execute `p
 ```swift
 import RestingKit
 
-let requestConverter = RestingRequestConverter()
-let restingClient = RestingClient(baseUrl: "https://jsonplaceholder.typicode.com",
-                                  decoder: decoder,
-                                  requestConverter: requestConverter)
+let restingClient = RestingClient(baseUrl: "https://jsonplaceholder.typicode.com")
 ```
 
-- `RestingClient` is the core class within RestingKit that does the heavy lifting by executing the requests. It is configured to use a single base URL, so if you need to access multiple APIs, you'll need to create multiple clients.
-- `RequestConverter` s transforms a `RestingRequest` to a `HTTPRequest`. `RestingRequestConverter` is the provided implementation that supports path templating.
+`RestingClient` is the core class within RestingKit that does the heavy lifting by executing the requests. It is configured to use a single base URL, so if you need to access multiple APIs, you'll need to create multiple clients.
 
 2. Define your models and endpoints
 
@@ -78,7 +74,7 @@ let restingClient = RestingClient(baseUrl: "https://jsonplaceholder.typicode.com
                                                                  encoding: .json)
    ```
 
-    An `Endpoint` is defined by the models of the request and response, the path (relative to the `RestingClient`'s `baseUrl`), the HTTP method to use and the encoding. If the request doesn't expect any content or doesn't return anything, you can use the special `Nothing` class. Ideally, we would use `Void`, but it is not possible to make it `Encodable` or `Decodable`.
+   An `Endpoint` is defined by the models of the request and response, the path (relative to the `RestingClient`'s `baseUrl`), the HTTP method to use and the encoding. If the request doesn't expect any content or doesn't return anything, you can use the special `Nothing` class. Ideally, we would use `Void`, but it is not possible to make it `Encodable` or `Decodable`.
 
 3. Create the request and make the actual call
 
@@ -194,7 +190,7 @@ let converter = RestingRequestConverter(multipartFormDataEncoder: formDataEncode
 ### Progress handlers
 
 `RestingClient`'s `upload` methods returns a `ProgressablePromise`, which acts like classic promisses but also
-accept progress handlers.
+accept a progress handlers.
 
 ```swift
 restingClient.upload(request).progress { progress in
@@ -264,9 +260,7 @@ class MyHTTPClient: HTTPClient {
 }
 
 let restingClient = RestingClient(baseUrl: "https://jsonplaceholder.typicode.com",
-                                  decoder: decoder,
-                                  httpClient: MyHTTPClient(),
-                                  requestConverter: requestConverter)
+                                  httpClient: MyHTTPClient())
 ```
 
 ## Work in progress
