@@ -135,32 +135,7 @@ public class MultipartFormDataEncoder {
     }
 
     private func fieldName(for path: [CodingKey]) -> String {
-        if path.isEmpty {
-            fatalError("No path provided")
-        }
-
-        if path.count == 1 {
-            switch options.keyEncodingStrategy {
-            case .useDefaultKeys:
-                return path.first!.stringValue
-            case.convertToSnakeCase:
-                return path.first!.stringValue.convertToSnakeCase()
-            case .custom(let converter):
-                return converter(path).stringValue
-            }
-        }
-
-        let mapper: ([CodingKey]) -> String
-        switch options.keyEncodingStrategy {
-        case .useDefaultKeys:
-            mapper = { $0.reduce("") { carry, key in "\(carry)[\(key.stringValue)]" } }
-        case.convertToSnakeCase:
-            mapper = { $0.reduce("") { carry, key in "\(carry)[\(key.stringValue.convertToSnakeCase())]" } }
-        case .custom(let converter):
-            mapper = { converter($0).stringValue }
-        }
-
-        return mapper(path)
+        path.flatten(with: options.keyEncodingStrategy)
     }
 }
 

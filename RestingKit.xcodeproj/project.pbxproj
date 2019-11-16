@@ -11,6 +11,7 @@
 		113F4D044A3C62A3E3AF1930 /* Pods_RestingKit_iOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00A2021AE9FDF800B7B0A6E6 /* Pods_RestingKit_iOS_Example.framework */; };
 		2F825988F6A79CA12B80651E /* Pods_RestingKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C4DE49E8D4F427764C8D27B /* Pods_RestingKitTests.framework */; };
 		C3523DCE4AB6C42F94843CA1 /* Pods_RestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F491190AF89288A037C5795 /* Pods_RestingKit.framework */; };
+		CE120C34238060770013C8E1 /* CodingKey+Flatten.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE120C33238060770013C8E1 /* CodingKey+Flatten.swift */; };
 		CEB342852247BB01006911E8 /* QueryNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB342842247BB01006911E8 /* QueryNode.swift */; };
 		CEB342872247BC0E006911E8 /* RestingCodingKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB342862247BC0E006911E8 /* RestingCodingKey.swift */; };
 		CEB342892247BC80006911E8 /* QueryParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB342882247BC80006911E8 /* QueryParameterEncoder.swift */; };
@@ -80,6 +81,7 @@
 		6C4DE49E8D4F427764C8D27B /* Pods_RestingKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RestingKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9258C40E3C0EE6F156D071CF /* Pods-RestingKit-iOS-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RestingKit-iOS-Example.debug.xcconfig"; path = "Target Support Files/Pods-RestingKit-iOS-Example/Pods-RestingKit-iOS-Example.debug.xcconfig"; sourceTree = "<group>"; };
 		925E5A55E53EDAD207033651 /* Pods-RestingKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RestingKit.debug.xcconfig"; path = "Target Support Files/Pods-RestingKit/Pods-RestingKit.debug.xcconfig"; sourceTree = "<group>"; };
+		CE120C33238060770013C8E1 /* CodingKey+Flatten.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodingKey+Flatten.swift"; sourceTree = "<group>"; };
 		CEB342842247BB01006911E8 /* QueryNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryNode.swift; sourceTree = "<group>"; };
 		CEB342862247BC0E006911E8 /* RestingCodingKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestingCodingKey.swift; sourceTree = "<group>"; };
 		CEB342882247BC80006911E8 /* QueryParameterEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryParameterEncoder.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				CEE286EF224169CC00EF945A /* MultipartNode.swift */,
 				CEB342842247BB01006911E8 /* QueryNode.swift */,
 				CEB342862247BC0E006911E8 /* RestingCodingKey.swift */,
+				CE120C33238060770013C8E1 /* CodingKey+Flatten.swift */,
 			);
 			path = Encoding;
 			sourceTree = "<group>";
@@ -636,6 +639,7 @@
 				CEE28700224169CC00EF945A /* HTTPDataResponse.swift in Sources */,
 				CEE286FB224169CC00EF945A /* RequestResponseLoggingInterceptor.swift in Sources */,
 				CEE286FE224169CC00EF945A /* HTTPClient.swift in Sources */,
+				CE120C34238060770013C8E1 /* CodingKey+Flatten.swift in Sources */,
 				CEB342872247BC0E006911E8 /* RestingCodingKey.swift in Sources */,
 				CEB342892247BC80006911E8 /* QueryParameterEncoder.swift in Sources */,
 				CEE286F9224169CC00EF945A /* Endpoint.swift in Sources */,
