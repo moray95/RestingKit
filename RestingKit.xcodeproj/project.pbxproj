@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		086A75BE2385558200BEE757 /* HeaderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086A75BD2385558200BEE757 /* HeaderProvider.swift */; };
+		086A75C02385693500BEE757 /* PathVariableProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086A75BF2385693500BEE757 /* PathVariableProvider.swift */; };
 		08E8EB46233CF78B007F41AE /* HTTPResponseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E8EB45233CF78B007F41AE /* HTTPResponseType.swift */; };
 		113F4D044A3C62A3E3AF1930 /* Pods_RestingKit_iOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00A2021AE9FDF800B7B0A6E6 /* Pods_RestingKit_iOS_Example.framework */; };
 		2F825988F6A79CA12B80651E /* Pods_RestingKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C4DE49E8D4F427764C8D27B /* Pods_RestingKitTests.framework */; };
@@ -74,6 +76,8 @@
 
 /* Begin PBXFileReference section */
 		00A2021AE9FDF800B7B0A6E6 /* Pods_RestingKit_iOS_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RestingKit_iOS_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		086A75BD2385558200BEE757 /* HeaderProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderProvider.swift; sourceTree = "<group>"; };
+		086A75BF2385693500BEE757 /* PathVariableProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathVariableProvider.swift; sourceTree = "<group>"; };
 		08E8EB45233CF78B007F41AE /* HTTPResponseType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPResponseType.swift; sourceTree = "<group>"; };
 		2F491190AF89288A037C5795 /* Pods_RestingKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RestingKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E93E79C2B4D7CB7FED15CFA /* Pods-RestingKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RestingKit.release.xcconfig"; path = "Target Support Files/Pods-RestingKit/Pods-RestingKit.release.xcconfig"; sourceTree = "<group>"; };
@@ -237,6 +241,8 @@
 				CEE286DE224169CB00EF945A /* RestingRequestConverter.swift */,
 				CEE286DF224169CB00EF945A /* Endpoint.swift */,
 				CEE286E0224169CB00EF945A /* RestingRequest.swift */,
+				086A75BD2385558200BEE757 /* HeaderProvider.swift */,
+				086A75BF2385693500BEE757 /* PathVariableProvider.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -627,12 +633,14 @@
 				CEE2870B224169CC00EF945A /* RestingInterceptor.swift in Sources */,
 				CEE28704224169CC00EF945A /* MultipartFile.swift in Sources */,
 				CEE28708224169CC00EF945A /* String.swift in Sources */,
+				086A75BE2385558200BEE757 /* HeaderProvider.swift in Sources */,
 				08E8EB46233CF78B007F41AE /* HTTPResponseType.swift in Sources */,
 				CEE286FA224169CC00EF945A /* RestingRequest.swift in Sources */,
 				CEE28702224169CC00EF945A /* HTTPError.swift in Sources */,
 				CEE286F7224169CC00EF945A /* HTTPRequest.swift in Sources */,
 				CEE28706224169CC00EF945A /* MultipartNode.swift in Sources */,
 				CEE2870A224169CC00EF945A /* ProgressablePromise.swift in Sources */,
+				086A75C02385693500BEE757 /* PathVariableProvider.swift in Sources */,
 				CEE286F8224169CC00EF945A /* RestingRequestConverter.swift in Sources */,
 				CEE286F5224169CC00EF945A /* RequestConverter.swift in Sources */,
 				CEE28703224169CC00EF945A /* Nothing.swift in Sources */,
@@ -926,7 +934,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.moraybaruh.RestingKit.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -945,7 +953,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.moraybaruh.RestingKit.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

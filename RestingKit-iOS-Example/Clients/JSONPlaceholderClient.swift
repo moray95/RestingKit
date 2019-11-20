@@ -10,9 +10,12 @@ import Foundation
 import RestingKit
 
 enum JSONPlaceholderClient {
+    static let configuration = RestingRequestConverter.Configuration(contextPath: "/posts",
+                                                                     headerProvider: RestingHeaderProvider(providers: [
+                                                                        "X-DEVICE-ID": { UIDevice.current.identifierForVendor?.uuidString }
+                                                                     ]))
+
     static let shared: RestingClient = RestingClient(baseUrl: "https://jsonplaceholder.typicode.com",
-                                                     decoder: JSONDecoder(),
-                                                     httpClient: AlamofireClient(),
-                                                     requestConverter: RestingRequestConverter(),
+                                                     requestConverter: RestingRequestConverter(configuration: configuration),
                                                      interceptors: [RequestResponseLoggingInterceptor()])
 }

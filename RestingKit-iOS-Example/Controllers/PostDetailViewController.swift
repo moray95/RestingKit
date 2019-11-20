@@ -17,7 +17,7 @@ class PostDetailViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let request = RestingRequest(endpoint: Endpoints.Posts.get, body: Nothing(), pathVariables: ["post_id": postId])
+        let request = RestingRequest(endpoint: Endpoints.Posts.get, body: Nothing(), pathVariables: ["post_id": postId as Any])
         JSONPlaceholderClient.shared.perform(request).extractingBody().done {
             self.titleLabel.text = $0.title
             self.textView.text = $0.body
