@@ -64,7 +64,7 @@ class RestingClientIntegrationTests: XCTestCase {
         uploadClient.upload(request)
             .progress { _ in progressCalled = true }
             .assertSuccess()
-            .waitForTesting(in: self)
+            .waitForTesting(in: self, timeout: timeout)
 
         XCTAssertTrue(progressCalled)
     }
