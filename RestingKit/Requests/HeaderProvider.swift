@@ -16,7 +16,7 @@ public class RestingHeaderProvider: HeaderProvider {
 
     public var headers: [String: String] { providers.compactMapValues { $0() } }
 
-    public init(providers: [String: () -> (String?)]) {
+    public init(providers: [String: () -> (String?)] = [:]) {
         self.providers = providers
     }
 

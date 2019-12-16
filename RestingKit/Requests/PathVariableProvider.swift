@@ -16,7 +16,7 @@ public class RestingPathVariableProvider: PathVariableProvider {
 
     public var variables: [String: Any] { providers.compactMapValues { $0() } }
 
-    public init(providers: [String: () -> (Any?)]) {
+    public init(providers: [String: () -> (Any?)] = [:]) {
         self.providers = providers
     }
 
