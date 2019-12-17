@@ -33,7 +33,7 @@ extension Array where Element == CodingKey {
     func flatten(converter: (String) -> String) -> String {
         let first = converter(self.first!.stringValue)
         return dropFirst().reduce(first) { carry, key in
-            if key.intValue != nil {
+            if key.intValue == nil {
                 return "\(carry)[\(converter(key.stringValue))]"
             } else {
                 return "\(carry)[]"
