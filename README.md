@@ -184,7 +184,8 @@ let formDataEncoder = MultipartFormDataEncoder()
 formDataEncoder.keyEncodingStrategy = .convertToSnakeCase
 formDataEncoder.dateEncodingStrategy = .secondsSince1970
 formDataEncoder.dataEncodingStrategy = .raw
-let converter = RestingRequestConverter(multipartFormDataEncoder: formDataEncoder)
+let configuration = RestingRequestConverter.Configuration(multipartFormDataEncoder: formDataEncoder)
+let converter = RestingRequestConverter(configuration: configuration)
 ```
 
 ### Progress handlers
@@ -262,6 +263,54 @@ class MyHTTPClient: HTTPClient {
 let restingClient = RestingClient(baseUrl: "https://jsonplaceholder.typicode.com",
                                   httpClient: MyHTTPClient())
 ```
+
+### Always-on headers and path variables
+
+Sometimes, you need to include the same headers or path variables in all requests. RestingKit has you covered! `RestingRequestConverter` can be configured add headers and include path variables in all requests.
+
+For example, the `DeviceIdInjector` interceptor can be re-written the following way:
+
+```swift
+let headerProvider = RestingHeaderProvider(providers: [ "device-id": { UIDevice.current.identifierForVendor?.uuidString } ])
+
+// Or
+
+headerProvider.addHeader(key: "device-id") { UIDevice.current.identifierForVendor?.uuidString }
+
+// Or
+
+if let deviceId = UIDevice.current.identifierForVendor?.uuidString {
+    headerProvider.addHeader(key: "device-id", value: deviceId)
+}
+
+let configuration = RestingRequestConverter.Configuration(headerProvider: headerProvider)
+let requestConverter = RestingRequestConverter(configuration: configuration)
+```
+
+Now, `device-id` will be present in all requests.
+
+In the same way, you can provide path variables:
+
+```swift
+let pathVariableProvider = RestingPathVariableProvider(providers: [ "userId": { AuthManager.user?.id } ])
+
+// Or
+
+pathVariableProvider.addVariable(key: "user-id") { AuthManager.user?.id }
+
+// Or
+
+if let userId = AuthManager.user?.id {
+    pathVariableProvider.addVariable(key: "user-id", value: userId)
+}
+
+let configuration = RestingRequestConverter.Configuration(pathVariableProvider: pathVariableProvider)
+let requestConverter = RestingRequestConverter(configuration: configuration)
+```
+
+You will now be able to use a path like `/users/{{userId}}/info` without providing the `userId` to the `RestingRequest`.
+
+When using header and path variable providers, the values added to individual requests overrides the one provided by providers.
 
 ## Work in progress
 

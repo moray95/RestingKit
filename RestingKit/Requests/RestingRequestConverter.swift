@@ -16,10 +16,13 @@ import Mustache
 /// - Streamed requests
 ///
 public class RestingRequestConverter: RequestConverter {
+    /// Errors thrown  by `RestingRequestConverter`.
     public enum Error: Swift.Error {
+        /// The request's path is invalid.
         case invalidPath
     }
 
+    /// The configuration settings for `RestingRequestConverter`.
     public struct Configuration {
         let jsonEncoder: JSONEncoder
         let queryParameterEncoder: QueryParameterEncoder
@@ -28,6 +31,19 @@ public class RestingRequestConverter: RequestConverter {
         let headerProvider: HeaderProvider?
         let pathVariableProvider: PathVariableProvider?
 
+        ///
+        /// Creates a new `Configuration`.
+        ///
+        /// - parameter jsonEncoder: The encoder to use when encoding JSON request bodies.
+        /// - parameter queryParameterEncoder: The encoder to use when encoding query parameters.
+        /// - parameter multipartFormDataEncoder: The encoder to use when encoding multipart/form-data bodies.
+        /// - parameter contextPath: A prefix to prepend to each request's path.
+        /// - parameter headerProvider: The provider to use for adding headers.
+        /// - parameter pathVariableProvider: The provider to use for adding path variables.
+        ///
+        ///  When using header and path variable providers, the values added to individual requests overrides
+        ///  the one provided by providers.
+        ///
         public init(
             jsonEncoder: JSONEncoder = JSONEncoder(),
             queryParameterEncoder: QueryParameterEncoder = QueryParameterEncoder(),
@@ -45,6 +61,7 @@ public class RestingRequestConverter: RequestConverter {
         }
     }
 
+    /// The configuration for the instance.
     public let configuration: Configuration
 
     ///
