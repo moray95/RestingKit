@@ -2,6 +2,7 @@
 
 [![CI Status](https://img.shields.io/travis/moray95/RestingKit.svg?style=flat)](https://travis-ci.org/moray95/RestingKit)
 [![Version](https://img.shields.io/cocoapods/v/RestingKit.svg?style=flat)](https://cocoapods.org/pods/RestingKit)
+[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/cocoapods/l/RestingKit.svg?style=flat)](https://cocoapods.org/pods/RestingKit)
 [![Platform](https://img.shields.io/cocoapods/p/RestingKit.svg?style=flat)](https://cocoapods.org/pods/RestingKit)
 
@@ -23,15 +24,21 @@ RestingKit is a higher-level wrapper around [Alamofire](https://github.com/Alamo
 
 ## Installation
 
-RestingKit is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following line to your Podfile:
+### CocoaPods
 
-```ruby
-pod 'RestingKit'
+[CocoaPods](https://cocoapods.org) is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website. To integrate RestingKit into your Xcode project using CocoaPods, specify it in your `Podfile`:
+
+### Carthage
+
+[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks. To integrate RestingKit into your Xcode project using Carthage, specify it in your `Cartfile`:
+
+```ogdl
+github "moray95/RestingKit"
 ```
 
 ## Example project
 
-An example project is included within the repositry. To run it, first execute `pod install`, then open `RestingKit.xcworkspace`. If you want to test file uploads with the example app, go into the `image_server` directory and run `php -S 0.0.0.0:9000 -c .`, which will start a dummy server for your uploads. The uploads will be stored in the `uploads` directory.
+An example project is included within the repositry. To run it, first execute `carthage update`, then open `RestingKit.project`. If you want to test file uploads with the example app, go into the `image_server` directory and run `php -S 0.0.0.0:9000 -c .`, which will start a dummy server for your uploads. The uploads will be stored in the `uploads` directory.
 
 ## Usage
 
@@ -235,7 +242,6 @@ class DeviceIdInjector: RestingInterceptor {
 }
 
 let restingClient = RestingClient(baseUrl: "https://jsonplaceholder.typicode.com",
-                                  decoder: decoder,
                                   requestConverter: requestConverter,
                                   interceptors: [DeviceIdInjector(), LogInterceptor()])
 ```
@@ -325,9 +331,10 @@ Additionally, there might be some api-breaking changes until the project reaches
 
 If you need help with getting started or have a feature request, just open up an issue. Pull requests are also welcome for bug fixes and new features.
 
-## Author
+## Authors
 
 Moray Baruh
+Burak Kelleroğlu
 
 ## License
 
