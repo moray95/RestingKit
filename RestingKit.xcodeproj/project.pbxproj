@@ -94,6 +94,13 @@
 			remoteGlobalIDString = CE4D88B424ABB31B00AB91DC;
 			remoteInfo = RestingKit;
 		};
+		CE4D897D24AD070200AB91DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE4D88AC24ABB31B00AB91DC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE4D893824ABBCCD00AB91DC;
+			remoteInfo = "RestingKit-iOS-Example";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -478,6 +485,7 @@
 			);
 			dependencies = (
 				CE4D88C124ABB31B00AB91DC /* PBXTargetDependency */,
+				CE4D897E24AD070200AB91DC /* PBXTargetDependency */,
 			);
 			name = RestingKitTests;
 			productName = RestingKitTests;
@@ -518,6 +526,7 @@
 					};
 					CE4D88BD24ABB31B00AB91DC = {
 						CreatedOnToolsVersion = 11.5;
+						TestTargetID = CE4D893824ABBCCD00AB91DC;
 					};
 					CE4D893824ABBCCD00AB91DC = {
 						CreatedOnToolsVersion = 11.5;
@@ -678,6 +687,11 @@
 			isa = PBXTargetDependency;
 			target = CE4D88B424ABB31B00AB91DC /* RestingKit */;
 			targetProxy = CE4D897324ABBFA100AB91DC /* PBXContainerItemProxy */;
+		};
+		CE4D897E24AD070200AB91DC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE4D893824ABBCCD00AB91DC /* RestingKit-iOS-Example */;
+			targetProxy = CE4D897D24AD070200AB91DC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -879,6 +893,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RestingKit-iOS-Example.app/RestingKit-iOS-Example";
 			};
 			name = Debug;
 		};
@@ -901,6 +916,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RestingKit-iOS-Example.app/RestingKit-iOS-Example";
 			};
 			name = Release;
 		};
