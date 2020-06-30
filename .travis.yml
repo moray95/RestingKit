@@ -1,12 +1,9 @@
-# references:
-# * https://www.objc.io/issues/6-build-tools/travis-ci/
-# * https://github.com/supermarin/xcpretty#usage
-
-osx_image: xcode11.2
 language: swift
 cache:
   directories:
     - Carthage
 
-before_script: carthage update && cd image_server && php -S 0.0.0.0:9000 -c . &
-script: set -o pipefail && xcodebuild -scheme RestingKitTests -destination "platform=iOS Simulator,OS=13.2.2,name=iPhone 11" test | xcpretty
+xcode_project: RestingKit.xcodeproj
+xcode_scheme: RestingKitTests
+xcode_destination: platform=iOS Simulator,OS=11.4,name=iPhone X
+before_script: carthage update && cd image_server && { php -S 0.0.0.0:9000 -c . & }
