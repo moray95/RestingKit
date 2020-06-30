@@ -2,11 +2,11 @@
 //  RestingKit.h
 //  RestingKit
 //
-//  Created by Moray on 3/19/19.
-//  Copyright © 2019 Moray Baruh. All rights reserved.
+//  Created by Moray on 6/30/20.
+//  Copyright © 2020 Moray Baruh. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for RestingKit.
 FOUNDATION_EXPORT double RestingKitVersionNumber;

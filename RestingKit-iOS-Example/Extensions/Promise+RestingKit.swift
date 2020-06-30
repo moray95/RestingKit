@@ -6,7 +6,7 @@
 //  Copyright © 2019 RestingKit. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import PromiseKit
 import RestingKit
 

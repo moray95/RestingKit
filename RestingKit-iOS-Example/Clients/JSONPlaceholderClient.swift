@@ -6,7 +6,7 @@
 //  Copyright © 2019 RestingKit. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import RestingKit
 
 enum JSONPlaceholderClient {

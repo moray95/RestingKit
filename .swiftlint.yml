@@ -2,7 +2,7 @@ included:
   - RestingKit
 analyzer_rules:
   - unused_import
-  - unused_private_declaration
+  - unused_declaration
 opt_in_rules:
   - anyobject_protocol
   - array_init
