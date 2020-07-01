@@ -5,7 +5,6 @@
 //  Created by Moray on 2/16/19.
 //
 
-import Alamofire
 import Foundation
 
 /// A protocol that converts `RestingRequest`s to `HTTPRequest`.
