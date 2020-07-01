@@ -128,7 +128,7 @@ public class RestingRequestConverter: RequestConverter {
         let headers = request.headers.merging(configuration.headerProvider?.headers ?? [:]) { old, _ in old }
         var urlRequest = try URLRequest(url: try components.asURL(),
                                         method: request.endpoint.method,
-                                        headers: headers)
+                                        headers: HTTPHeaders(headers))
 
         guard withBody else {
             return urlRequest

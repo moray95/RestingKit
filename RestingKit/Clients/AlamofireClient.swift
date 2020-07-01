@@ -17,14 +17,14 @@ public class AlamofireClient: HTTPClient {
         case unknown
     }
 
-    private let sessionManager: SessionManager
+    private let session: Session
 
     /// Creates a new `AlamofireClient`.
     ///
-    /// - parameter sessionManager: The session manager to use for sending requests.
+    /// - parameter session: The Alamofire session  to use for sending requests.
     ///
-    public init(sessionManager: SessionManager = SessionManager.default) {
-        self.sessionManager = sessionManager
+    public init(sessionManager: Session = Session.default) {
+        self.session = sessionManager
     }
 
     public func perform(request: HTTPRequest) -> Promise<HTTPDataResponse> {
@@ -32,7 +32,7 @@ public class AlamofireClient: HTTPClient {
             return perform(urlRequest: request.urlRequest)
         }
         return Promise { resolver in
-            sessionManager.upload(url, with: request.urlRequest).responseData {
+            session.upload(url, with: request.urlRequest).responseData {
                 self.handle(dataResponse: $0, resolver: resolver)
             }
         }
@@ -40,7 +40,7 @@ public class AlamofireClient: HTTPClient {
 
     private func perform(urlRequest: URLRequest) -> Promise<HTTPDataResponse> {
         return Promise { resolver in
-            sessionManager.request(urlRequest).responseData {
+            session.request(urlRequest).responseData {
                 self.handle(dataResponse: $0, resolver: resolver)
             }
         }
@@ -56,13 +56,13 @@ public class AlamofireClient: HTTPClient {
     private func upload(request: URLRequest,
                         fileUrl: URL) -> ProgressablePromise<HTTPDataResponse> {
         return ProgressablePromise<HTTPDataResponse> { resolver, progressHandler in
-            sessionManager.upload(fileUrl, with: request).uploadProgress(closure: progressHandler).responseData {
+            session.upload(fileUrl, with: request).uploadProgress(closure: progressHandler).responseData {
                 self.handle(dataResponse: $0, resolver: resolver)
             }
         }
     }
 
-    private func handle(dataResponse: DataResponse<Data>, resolver: Resolver<HTTPDataResponse>) {
+    private func handle(dataResponse: AFDataResponse<Data>, resolver: Resolver<HTTPDataResponse>) {
         if let urlResponse = dataResponse.response {
             switch dataResponse.result {
             case .success(let data):
