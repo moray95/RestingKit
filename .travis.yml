@@ -1,9 +1,0 @@
-language: swift
-cache:
-  directories:
-    - Carthage
-
-xcode_project: RestingKit.xcodeproj
-xcode_scheme: RestingKitTests
-xcode_destination: platform=iOS Simulator,OS=11.4,name=iPhone X
-before_script: carthage update && cd image_server && { php -S 0.0.0.0:9000 -c . & }
